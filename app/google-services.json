@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "739266560477",
+    "firebase_url": "https://devunion-platform-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "devunion-platform",
+    "storage_bucket": "devunion-platform.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739266560477:android:c0b31908ef02233cbc3634",
+        "android_client_info": {
+          "package_name": "dev.devunion.myportfolio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739266560477-8pn976kb92m4qu7s9rfbt1d3t4gpujik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyColLdoqDbthc4l_KLnzU-f0ktOHV0Ewao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739266560477-8pn976kb92m4qu7s9rfbt1d3t4gpujik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
