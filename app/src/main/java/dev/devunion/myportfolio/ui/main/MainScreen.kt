@@ -1,7 +1,6 @@
 package dev.devunion.myportfolio.ui.main
 
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -13,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.devunion.myportfolio.navigation.Screens
 import dev.devunion.myportfolio.ui.main.components.MainScaffold
 import dev.devunion.myportfolio.ui.theme.MyPortfolioTheme
 
@@ -22,11 +20,11 @@ import dev.devunion.myportfolio.ui.theme.MyPortfolioTheme
 @Composable
 fun HomeScreenPreview() {
     val navController = rememberNavController()
-    MainScreen(navController)
+    MainScreen(navController) {}
 }
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(navController: NavController, logout: () -> Unit) {
 
 
     MyPortfolioTheme {
@@ -36,7 +34,7 @@ fun MainScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            MainScaffold()
+            MainScaffold(logout)
         }
 
     }

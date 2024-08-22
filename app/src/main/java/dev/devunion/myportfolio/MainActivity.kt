@@ -7,9 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dev.devunion.myportfolio.navigation.MainNavGraph
 import dev.devunion.myportfolio.navigation.RootNav
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 
 class MainActivity : ComponentActivity() {
 
@@ -23,26 +22,26 @@ class MainActivity : ComponentActivity() {
             RootNav(
                 navController = navController
             )
-            val currentApiVersion = Build.VERSION.SDK_INT
-            if (currentApiVersion < Build.VERSION_CODES.S) {
-                navigateToSplashScreen()
-            }
+//            val currentApiVersion = Build.VERSION.SDK_INT
+//            if (currentApiVersion < Build.VERSION_CODES.S) {
+//                navigateToSplashScreen()
+//            }
         }
     }
 
     private fun navigateToSplashScreen() {
         navController.popBackStack()
-        navController.navigate(route = Screens.SplashScreen.route)
+        navController.navigate(route = ScreenRoutes.SplashScreen.route)
     }
 
 
     private fun navigateToMainScreen() {
         navController.popBackStack()
-        navController.navigate(route = Screens.MainScreen.route)
+        navController.navigate(route = ScreenRoutes.MainScreen.route)
     }
 
     private fun navigateToLoginScreen() {
         navController.popBackStack()
-        navController.navigate(route = Screens.LoginScreen.route)
+        navController.navigate(route = ScreenRoutes.LoginScreen.route)
     }
 }

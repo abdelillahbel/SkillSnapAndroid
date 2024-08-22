@@ -1,19 +1,14 @@
 package dev.devunion.myportfolio.ui.main.components
 
-import android.graphics.Paint.Style
-import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
@@ -34,7 +29,7 @@ fun MainTopAppBar(authViewModel: AuthViewModelInterface, navController: NavContr
         actions = {
             TextButton(onClick = {
                 authViewModel.logout(onSuccess = {
-                    navController.navigate(Screens.LoginScreen.route)
+                    navController.navigate(ScreenRoutes.LoginScreen.route)
                 }, onFailure = { exception ->
 //                    logViewModel.crash(screenName, exception)
                 })

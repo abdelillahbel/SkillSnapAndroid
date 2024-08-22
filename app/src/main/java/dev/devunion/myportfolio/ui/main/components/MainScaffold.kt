@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import dev.devunion.myportfolio.navigation.BottomNavGraph
+import dev.devunion.myportfolio.navigation.MainNavGraph
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 
 
@@ -27,13 +27,13 @@ import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 @Preview(showBackground = true)
 @Composable
 fun ScaffoldDemo() {
-    MainScaffold()
+    MainScaffold() {}
 }
 
 
 @SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
-fun MainScaffold() {
+fun MainScaffold(logout: () -> Unit) {
     val navController = rememberNavController()
     LocalContext.current.applicationContext
 
@@ -77,7 +77,7 @@ fun MainScaffold() {
                 horizontalAlignment = CenterHorizontally
             ) {
 
-                BottomNavGraph(navController)
+                MainNavGraph(navController = navController, logout)
             }
         },
         bottomBar = {

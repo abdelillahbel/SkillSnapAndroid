@@ -25,7 +25,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -54,11 +53,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.android.play.integrity.internal.i
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.R
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
@@ -154,8 +152,8 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
                 )
                 SignUpFooter(
                     onSignInClick = {
-                        navController.navigate(Screens.LoginScreen.route) {
-                            popUpTo(Screens.SignUpScreen.route) { inclusive = true }
+                        navController.navigate(ScreenRoutes.LoginScreen.route) {
+                            popUpTo(ScreenRoutes.SignUpScreen.route) { inclusive = true }
                         }
                     },
                     onSignUpClick = {
@@ -163,8 +161,10 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
                             onSuccess = {
                                 authViewModel.saveUserData(
                                     onSuccess = {
-                                        navController.navigate(Screens.MainScreen.route) {
-                                            popUpTo(Screens.SignUpScreen.route) { inclusive = true }
+                                        navController.navigate(ScreenRoutes.MainScreen.route) {
+                                            popUpTo(ScreenRoutes.SignUpScreen.route) {
+                                                inclusive = true
+                                            }
                                         }
                                     },
                                     onFailure = { exception ->

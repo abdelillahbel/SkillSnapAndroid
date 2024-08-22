@@ -4,10 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Man
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Portrait
 import androidx.compose.material.icons.outlined.TipsAndUpdates
 import androidx.compose.material3.Icon
@@ -22,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 
 @Composable
 fun MainBottomBar(navController: NavHostController) {
@@ -74,19 +71,19 @@ object NavBarItems {
         BottomBarItem(
             icon = Icons.Outlined.Home,
             name = "Home",
-            route = Screens.HomeScreen.route,
+            route = ScreenRoutes.HomeScreen.route,
         ), BottomBarItem(
             icon = Icons.Outlined.Portrait,
             name = "Profile",
-            route = Screens.ProfileScreen.route
+            route = ScreenRoutes.ProfileScreen.route
         ), BottomBarItem(
             icon = Icons.Outlined.TipsAndUpdates,
             name = "Updates",
-            route = Screens.UpdatesScreen.route
+            route = ScreenRoutes.UpdatesScreen.route
         ), BottomBarItem(
             icon = Icons.Outlined.AccountCircle,
             name = "Account",
-            route = Screens.AccountScreen.route
+            route = ScreenRoutes.AccountScreen.route
         )
     )
 }

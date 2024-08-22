@@ -21,7 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.utils.PreferenceHelper
 import dev.devunion.myportfolio.R
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 
 
 @Preview
@@ -41,14 +41,14 @@ fun SplashScreen(navController: NavController) {
 //        delay(2000)
 
         when (user) {
-            null -> navController.navigate(Screens.LoginScreen.route) {
-                popUpTo(Screens.SplashScreen.route) {
+            null -> navController.navigate(ScreenRoutes.AuthNav.route) {
+                popUpTo(ScreenRoutes.SplashScreen.route) {
                     inclusive = true
                 }
             }
 
-            else -> navController.navigate(Screens.MainScreen.route) {
-                popUpTo(Screens.SplashScreen.route) {
+            else -> navController.navigate(ScreenRoutes.MainNav.route) {
+                popUpTo(ScreenRoutes.SplashScreen.route) {
                     inclusive = true
                 }
             }
