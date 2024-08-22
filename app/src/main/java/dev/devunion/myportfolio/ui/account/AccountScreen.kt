@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.*
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,9 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import dev.devunion.myportfolio.R
 import androidx.navigation.compose.rememberNavController
-import com.google.api.Context
-import dev.devunion.myportfolio.navigation.Screens
-import dev.devunion.myportfolio.ui.auth.AuthScreen
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
@@ -42,7 +39,7 @@ fun AccountScreenPreview() {
     val authViewModel: DummyAuthViewModel = viewModel()
     val navController = rememberNavController()
 
-    AccountScreen(authViewModel = authViewModel, navController = navController)
+    AccountScreen(authViewModel = authViewModel, navController = navController) {}
 
 
 }
@@ -50,7 +47,8 @@ fun AccountScreenPreview() {
 @Composable
 fun AccountScreen(
     authViewModel: AuthViewModelInterface,
-    navController: NavController
+    navController: NavController,
+    logout: () -> Unit
 ) {
     // Placeholder for user data
     val userName = "John Doe"
@@ -73,7 +71,7 @@ fun AccountScreen(
         // Settings Button
         SettingsButton {
             // Navigate to Settings (placeholder function)
-//            navController.navigate(Screens.SettingsScreen.route)
+//            navController.navigate(ScreenRoutes.SettingsScreen.route)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -82,12 +80,8 @@ fun AccountScreen(
         LogoutButton(onClick = {
             authViewModel.logout(
                 onSuccess = {
-                    navController.navigate(Screens.LoginScreen.route) {
-                        popUpTo(Screens.MainScreen.route) {
-                            inclusive = true
-                        }
-                    }
-
+                    // logout and forward to auth screen
+                    logout.invoke()
                 },
                 onFailure = { exception ->
                     Toast.makeText(context, exception.message.toString(), Toast.LENGTH_SHORT).show()

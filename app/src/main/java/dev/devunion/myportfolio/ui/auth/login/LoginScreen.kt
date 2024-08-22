@@ -55,7 +55,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.devunion.myportfolio.R
-import dev.devunion.myportfolio.navigation.Screens
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
@@ -75,19 +75,19 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
     val context = LocalContext.current
 
     // Check if the user is already logged in
-    LaunchedEffect(Unit) {
-        authViewModel.isUserLoggedIn(onSuccess = { isLogged ->
-            if (isLogged) {
-                navController.navigate(Screens.MainScreen.route) {
-                    popUpTo(Screens.LoginScreen.route) { inclusive = true }
-                }
-            }
-        }, onFailure = { exception ->
-            Log.w("AuthScreen", "Error: ${exception.message}")
-            Toast.makeText(context, "Error: ${exception.message.toString()}", Toast.LENGTH_SHORT)
-                .show()
-        })
-    }
+//    LaunchedEffect(Unit) {
+//        authViewModel.isUserLoggedIn(onSuccess = { isLogged ->
+//            if (isLogged) {
+//                navController.navigate(ScreenRoutes.MainScreen.route) {
+//                    popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = true }
+//                }
+//            }
+//        }, onFailure = { exception ->
+//            Log.w("AuthScreen", "Error: ${exception.message}")
+//            Toast.makeText(context, "Error: ${exception.message.toString()}", Toast.LENGTH_SHORT)
+//                .show()
+//        })
+//    }
 
     var showDialog by remember { mutableStateOf(false) }
     var dialogMessage by remember { mutableStateOf("") }
@@ -158,7 +158,7 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
                     onEmailChange = { authViewModel.email = it },
                     onPasswordChange = { authViewModel.password = it },
                     onForgotPasswordClick = {
-                        navController.navigate(Screens.ResetPasswordScreen.route)
+                        navController.navigate(ScreenRoutes.ResetPasswordScreen.route)
 //                        navController.toForgotPassword()
                     }
                 )
@@ -167,7 +167,7 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
                         authViewModel.login(
                             onSuccess = {
                                 navController.popBackStack()
-                                navController.navigate(Screens.MainScreen.route)
+                                navController.navigate(ScreenRoutes.MainNav.route)
                             },
                             onFailure = { exception ->
                                 dialogMessage = exception.message.toString()
@@ -176,8 +176,8 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
                         )
                     },
                     onSignUpClick = {
-                        navController.navigate(Screens.SignUpScreen.route) {
-                            popUpTo(Screens.LoginScreen.route) { inclusive = false }
+                        navController.navigate(ScreenRoutes.SignUpScreen.route) {
+                            popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = false }
                         }
                     }
                 )

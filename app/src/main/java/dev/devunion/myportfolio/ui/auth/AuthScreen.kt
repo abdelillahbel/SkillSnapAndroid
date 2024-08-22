@@ -1,30 +1,14 @@
 package dev.devunion.myportfolio.ui.auth
 
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import android.content.ContentValues.TAG
 import android.util.Log
-import androidx.compose.animation.animateContentSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import dev.devunion.myportfolio.navigation.Screens
-import dev.devunion.myportfolio.ui.main.components.MainScaffold
-import dev.devunion.myportfolio.ui.theme.MyPortfolioTheme
+import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
@@ -47,7 +31,7 @@ fun AuthScreen(authViewModel: AuthViewModelInterface, navController: NavControll
         authViewModel.isUserLoggedIn(onSuccess = { isLogged ->
             if (isLogged) {
                 navController.popBackStack()
-                navController.navigate(Screens.MainScreen.route)
+                navController.navigate(ScreenRoutes.MainScreen.route)
             }
         }, onFailure = { exception ->
             Log.w("AuthScreen", "Error: ${exception.message}")
@@ -115,7 +99,7 @@ fun AuthScreen(authViewModel: AuthViewModelInterface, navController: NavControll
 //                authViewModel.register(
 //                    onSuccess = {
 //                        navController.popBackStack()
-//                        navController.navigate(Screens.MainScreen.route) },
+//                        navController.navigate(ScreenRoutes.MainScreen.route) },
 //                    onFailure = { exception ->
 //                        dialogMessage = exception.message.toString()
 //                        showDialog = true
@@ -141,7 +125,7 @@ fun AuthScreen(authViewModel: AuthViewModelInterface, navController: NavControll
 //                authViewModel.login(
 //                    onSuccess = {
 //                        navController.popBackStack()
-//                        navController.navigate(Screens.MainScreen.route) },
+//                        navController.navigate(ScreenRoutes.MainScreen.route) },
 //                    onFailure = { exception ->
 //                        dialogMessage = exception.message.toString()
 //                        showDialog = true

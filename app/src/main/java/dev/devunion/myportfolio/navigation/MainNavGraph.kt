@@ -16,52 +16,46 @@ import dev.devunion.myportfolio.ui.main.MainScreen
 import dev.devunion.myportfolio.ui.profile.ProfileScreen
 import dev.devunion.myportfolio.ui.splash.SplashScreen
 import dev.devunion.myportfolio.ui.updates.UpdatesScreen
+import dev.devunion.myportfolio.utils.PreferenceHelper
 import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
 
 @Composable
-fun MainNavGraph(navController: NavHostController) {
+fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
     val user = Firebase.auth.currentUser
     val context = LocalContext.current
-    // val preferenceHelper:  PreferenceHelper = PreferenceHelper(context)
+    val preferenceHelper: PreferenceHelper = PreferenceHelper(context)
 
     NavHost(
         navController = navController,
-        route = Screens.MainNav.route,
-        startDestination = when (user) {
-            null -> Screens.LoginScreen.route
-            else -> Screens.MainScreen.route
-        }
+        route = ScreenRoutes.MainNav.route,
+        startDestination = ScreenRoutes.HomeScreen.route
+
 
     ) {
 
-        composable(route = Screens.SplashScreen.route) {
-            SplashScreen(navController)
+        composable(route = ScreenRoutes.HomeScreen.route) {
+            HomeScreen(navController)
         }
-        composable(route = Screens.MainScreen.route) {
-            MainScreen(navController)
+        composable(route = ScreenRoutes.ProfileScreen.route) {
+            ProfileScreen(navController)
         }
-        composable(route = Screens.LoginScreen.route) {
+        composable(route = ScreenRoutes.UpdatesScreen.route) {
+            UpdatesScreen(navController)
+        }
+        composable(route = ScreenRoutes.AccountScreen.route) {
             val authViewModel = FirebaseAuthViewModel()
-            LoginScreen(authViewModel, navController)
-        }
-        composable(route = Screens.SignUpScreen.route) {
-            val authViewModel = FirebaseAuthViewModel()
-            SignUpScreen(authViewModel, navController)
-        }
-        composable(route = Screens.ResetPasswordScreen.route) {
-            val authViewModel = FirebaseAuthViewModel()
-            ResetPasswordScreen(authViewModel, navController)
+            AccountScreen(authViewModel, navController, logout)
         }
 
 
-        /*   composable(route = Screens.OnboardingScreen.route) {
+        /*   composable(route = ScreenRoutes.OnboardingScreen.route) {
                OnboardingScreen {
                    navController.popBackStack()
-                   navController.navigate(route = Screens.AuthScreen.route)
+                   navController.navigate(route = ScreenRoutes.AuthScreen.route)
                }
            }
 
-           composable(route = Screens.AuthScreen.route, enterTransition = {
+           composable(route = ScreenRoutes.AuthScreen.route, enterTransition = {
                slideIntoContainer(
                    AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(700)
                )
@@ -72,7 +66,7 @@ fun MainNavGraph(navController: NavHostController) {
            }) {
                AuthScreen(navigateToMainScreen = {
                    navController.popBackStack()
-                   navController.navigate(route = Screens.MainScreen.route)
+                   navController.navigate(route = ScreenRoutes.MainScreen.route)
                })
            }*/
 
@@ -80,27 +74,27 @@ fun MainNavGraph(navController: NavHostController) {
     }
 }
 
-@Composable
-fun BottomNavGraph(
-    navController: NavHostController
-) {
-
-    NavHost(
-        navController = navController,
-        startDestination = Screens.HomeScreen.route
-    ) {
-        composable(route = Screens.HomeScreen.route) {
-            HomeScreen(navController)
-        }
-        composable(route = Screens.ProfileScreen.route) {
-            ProfileScreen(navController)
-        }
-        composable(route = Screens.UpdatesScreen.route) {
-            UpdatesScreen(navController)
-        }
-        composable(route = Screens.AccountScreen.route) {
-            val authViewModel = FirebaseAuthViewModel()
-            AccountScreen(authViewModel, navController)
-        }
-    }
-}
+//@Composable
+//fun BottomNavGraph(
+//    navController: NavHostController
+//) {
+//
+//    NavHost(
+//        navController = navController,
+//        startDestination = ScreenRoutes.HomeScreen.route
+//    ) {
+//        composable(route = ScreenRoutes.HomeScreen.route) {
+//            HomeScreen(navController)
+//        }
+//        composable(route = ScreenRoutes.ProfileScreen.route) {
+//            ProfileScreen(navController)
+//        }
+//        composable(route = ScreenRoutes.UpdatesScreen.route) {
+//            UpdatesScreen(navController)
+//        }
+//        composable(route = ScreenRoutes.AccountScreen.route) {
+//            val authViewModel = FirebaseAuthViewModel()
+//            AccountScreen(authViewModel, navController)
+//        }
+//    }
+//}
