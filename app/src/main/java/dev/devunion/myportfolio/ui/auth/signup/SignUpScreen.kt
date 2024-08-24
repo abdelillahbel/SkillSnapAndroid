@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.R
@@ -60,13 +61,6 @@ import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 
-@Preview
-@Composable
-fun SignUpScreenPreview() {
-    val navController = rememberNavController()
-    val authViewModel: DummyAuthViewModel = viewModel()
-    SignUpScreen(authViewModel = authViewModel, navController = navController)
-}
 
 @Composable
 fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavController) {
@@ -97,7 +91,7 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bg_blue_c),
+            painter = painterResource(id = R.drawable.blurry_gradient_bg),
             contentDescription = "Login",
             modifier = Modifier
                 .fillMaxSize()
@@ -152,16 +146,15 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
                 )
                 SignUpFooter(
                     onSignInClick = {
-                        navController.navigate(ScreenRoutes.LoginScreen.route) {
-                            popUpTo(ScreenRoutes.SignUpScreen.route) { inclusive = true }
-                        }
+                        navController.popBackStack()
+                        navController.navigate(ScreenRoutes.LoginScreen.route)
                     },
                     onSignUpClick = {
                         authViewModel.register(
                             onSuccess = {
                                 authViewModel.saveUserData(
                                     onSuccess = {
-                                        navController.navigate(ScreenRoutes.MainScreen.route) {
+                                        navController.navigate(ScreenRoutes.MainNav.route) {
                                             popUpTo(ScreenRoutes.SignUpScreen.route) {
                                                 inclusive = true
                                             }
@@ -198,7 +191,10 @@ fun SignUpHeader() {
             fontFamily = FontFamily(Font(R.font.inter_medium))
 
         )
-        Text(text = "Create account for free", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+        Text(
+            text = "Create account for free", fontSize = 18.sp, fontWeight = FontWeight.SemiBold,
+            fontFamily = FontFamily(Font(R.font.inter_medium))
+        )
     }
 }
 
@@ -214,7 +210,7 @@ fun SignUpFields(
         TextField(
             value = email,
             label = "Email",
-            placeholder = "Enter your email address",
+            placeholder = "",
             onValueChange = onEmailChange,
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = "Email")
@@ -230,7 +226,7 @@ fun SignUpFields(
         TextField(
             value = password,
             label = "Password",
-            placeholder = "Enter your password",
+            placeholder = "",
             onValueChange = onPasswordChange,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -246,7 +242,7 @@ fun SignUpFields(
         TextField(
             value = confirmPassword,
             label = "Retype Password",
-            placeholder = "Retype password",
+            placeholder = "",
             onValueChange = onConfirmPasswordChange,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -259,7 +255,7 @@ fun SignUpFields(
         )
 
         TextButton(onClick = onForgotPasswordClick, modifier = Modifier.align(Alignment.End)) {
-            Text(text = "Forgot Password?")
+            Text(text = "Forgot Password?", fontFamily = FontFamily(Font(R.font.inter_medium)))
         }
     }
 }
@@ -275,12 +271,15 @@ fun SignUpFooter(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = "Sign Up"
+                text = "Sign Up",
+                fontFamily = FontFamily(Font(R.font.inter_medium))
             )
         }
         TextButton(onClick = onSignInClick) {
             Text(
-                text = "Already have account?, click here"
+                text = "Already have account?, click here",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
             )
         }
     }
@@ -301,10 +300,16 @@ fun TextField(
         value = value,
         onValueChange = onValueChange,
         label = {
-            Text(text = label)
+            Text(
+                text = label,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
+            )
         },
         placeholder = {
-            Text(text = placeholder)
+            Text(
+                text = placeholder,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
+            )
         },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,

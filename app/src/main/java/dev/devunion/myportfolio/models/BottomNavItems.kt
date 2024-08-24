@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import dev.devunion.myportfolio.R
 import dev.devunion.myportfolio.navigation.ScreenRoutes
 
+/* TODO */
 sealed class BottomNavItems(
     val title: String,
     val route: String,

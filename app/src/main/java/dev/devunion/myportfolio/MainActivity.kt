@@ -29,19 +29,19 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun navigateToSplashScreen() {
-        navController.popBackStack()
-        navController.navigate(route = ScreenRoutes.SplashScreen.route)
-    }
-
-
-    private fun navigateToMainScreen() {
-        navController.popBackStack()
-        navController.navigate(route = ScreenRoutes.MainScreen.route)
-    }
-
-    private fun navigateToLoginScreen() {
-        navController.popBackStack()
-        navController.navigate(route = ScreenRoutes.LoginScreen.route)
-    }
+//    private fun navigateToSplashScreen() {
+//        navController.popBackStack()
+//        navController.navigate(route = ScreenRoutes.SplashScreen.route)
+//    }
+//
+//
+//    private fun navigateToMainScreen() {
+//        navController.popBackStack()
+//        navController.navigate(route = ScreenRoutes.MainScreen.route)
+//    }
+//
+//    private fun navigateToLoginScreen() {
+//        navController.popBackStack()
+//        navController.navigate(route = ScreenRoutes.LoginScreen.route)
+//    }
 }

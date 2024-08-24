@@ -13,11 +13,14 @@ import dev.devunion.myportfolio.ui.auth.reset_password.ResetPasswordScreen
 import dev.devunion.myportfolio.ui.auth.signup.SignUpScreen
 import dev.devunion.myportfolio.ui.home.HomeScreen
 import dev.devunion.myportfolio.ui.main.MainScreen
+import dev.devunion.myportfolio.ui.profile.CreateProfileScreen
 import dev.devunion.myportfolio.ui.profile.ProfileScreen
+import dev.devunion.myportfolio.ui.profile.UpdateProfileScreen
 import dev.devunion.myportfolio.ui.splash.SplashScreen
 import dev.devunion.myportfolio.ui.updates.UpdatesScreen
 import dev.devunion.myportfolio.utils.PreferenceHelper
 import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
+import dev.devunion.myportfolio.viewmodels.db.FirebaseFirestoreViewModel
 
 @Composable
 fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
@@ -37,14 +40,34 @@ fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
             HomeScreen(navController)
         }
         composable(route = ScreenRoutes.ProfileScreen.route) {
-            ProfileScreen(navController)
+            val firestoreViewModel = FirebaseFirestoreViewModel()
+            ProfileScreen(navController = navController, firestoreViewModel)
         }
+
+        composable(route = ScreenRoutes.CreateProfileScreen.route) {
+            val firestoreViewModel = FirebaseFirestoreViewModel()
+            CreateProfileScreen(
+                navController = navController,
+                viewModel = firestoreViewModel,
+                onProfileCreated = {
+                    navController.popBackStack() // Navigate back to profile screen
+                })
+        }
+
+        composable(route = ScreenRoutes.UpdateProfileScreen.route) {
+            val firestoreViewModel = FirebaseFirestoreViewModel()
+            UpdateProfileScreen(
+                navController = navController,
+                viewModel = firestoreViewModel
+            )
+        }
+
         composable(route = ScreenRoutes.UpdatesScreen.route) {
             UpdatesScreen(navController)
         }
         composable(route = ScreenRoutes.AccountScreen.route) {
             val authViewModel = FirebaseAuthViewModel()
-            AccountScreen(authViewModel, navController, logout)
+            AccountScreen(authViewModel, navController = navController, logout)
         }
 
 

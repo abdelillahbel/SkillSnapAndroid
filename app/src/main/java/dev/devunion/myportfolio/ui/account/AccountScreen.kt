@@ -18,6 +18,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,15 +37,15 @@ import androidx.navigation.compose.rememberNavController
 import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
+import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
 
 @Preview
 @Composable
 fun AccountScreenPreview() {
-    val authViewModel: DummyAuthViewModel = viewModel()
+    val authViewModel: FirebaseAuthViewModel = viewModel()
     val navController = rememberNavController()
 
     AccountScreen(authViewModel = authViewModel, navController = navController) {}
-
 
 }
 
@@ -50,9 +55,27 @@ fun AccountScreen(
     navController: NavController,
     logout: () -> Unit
 ) {
+
+    var userId by remember { mutableStateOf("") }
+    var userEmail by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    // Fetch the user data when the composable is launched
+    LaunchedEffect(Unit) {
+        authViewModel.getUser(
+            onSuccess = { user ->
+                userId = user.id
+                userEmail = user.email
+            },
+            onFailure = { exception ->
+                errorMessage = exception.message
+            }
+        )
+    }
+
+
     // Placeholder for user data
     val userName = "John Doe"
-    val userEmail = "john.doe@example.com"
 
     val context = LocalContext.current
 
@@ -64,7 +87,7 @@ fun AccountScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Profile Section
-        ProfileSection(userName = userName, userEmail = userEmail)
+        ProfileSection(userName = userId, userEmail = userEmail)
 
         Spacer(modifier = Modifier.height(24.dp))
 

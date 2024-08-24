@@ -27,7 +27,7 @@ import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 @Preview(showBackground = true)
 @Composable
 fun ScaffoldDemo() {
-    MainScaffold() {}
+    MainScaffold {}
 }
 
 

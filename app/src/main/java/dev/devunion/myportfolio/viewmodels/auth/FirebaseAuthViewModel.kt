@@ -3,6 +3,7 @@ package dev.devunion.myportfolio.viewmodels.auth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -11,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.models.User
 
 class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
+
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = FirebaseFirestore.getInstance()
 

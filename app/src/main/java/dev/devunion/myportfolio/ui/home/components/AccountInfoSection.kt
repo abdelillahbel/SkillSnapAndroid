@@ -31,7 +31,7 @@ import dev.devunion.myportfolio.R
 @Composable
 fun AccountInfoSection() {
 
-    Row() {
+    Row {
         Row {
             Box(modifier = Modifier
                 .size(80.dp)

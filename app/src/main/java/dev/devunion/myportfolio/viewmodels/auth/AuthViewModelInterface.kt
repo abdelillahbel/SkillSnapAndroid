@@ -4,6 +4,7 @@ import dev.devunion.myportfolio.models.User
 
 
 interface AuthViewModelInterface {
+
     var email: String
     var password: String
     var confirmPassword: String

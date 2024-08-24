@@ -1,8 +1,6 @@
 package dev.devunion.myportfolio.ui.auth.login
 
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,39 +38,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.devunion.myportfolio.R
 import dev.devunion.myportfolio.navigation.ScreenRoutes
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
-import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    val authViewModel: DummyAuthViewModel = viewModel()
-
-    LoginScreen(authViewModel = authViewModel, navController = navController)
-}
 
 
 @Composable
 fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavController) {
+    SetBarColor(color = MaterialTheme.colorScheme.background)
+
     val scrollState = rememberScrollState()
-    val context = LocalContext.current
+    // val context = LocalContext.current
 
     // Check if the user is already logged in
 //    LaunchedEffect(Unit) {
@@ -112,7 +102,7 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bg_blue_c),
+            painter = painterResource(id = R.drawable.blurry_gradient_bg),
             contentDescription = "Login",
             modifier = Modifier
                 .fillMaxSize()
@@ -177,7 +167,7 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
                     },
                     onSignUpClick = {
                         navController.navigate(ScreenRoutes.SignUpScreen.route) {
-                            popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = false }
+                            popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = true }
                         }
                     }
                 )
@@ -192,10 +182,17 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
 @Composable
 fun LoginHeader() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Welcome Back", fontSize = 36.sp, fontWeight = FontWeight.ExtraBold)
-        Text(text = "Sign in to continue", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+        Text(
+            text = "Welcome Back", fontSize = 36.sp, fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(Font(R.font.inter_medium))
+        )
+        Text(
+            text = "Sign in to continue", fontSize = 18.sp, fontWeight = FontWeight.SemiBold,
+            fontFamily = FontFamily(Font(R.font.inter_medium))
+        )
     }
 }
+
 
 @Composable
 fun LoginFields(
@@ -208,7 +205,7 @@ fun LoginFields(
         TextField(
             value = email,
             label = "Email",
-            placeholder = "Enter your email address",
+            placeholder = "",
             onValueChange = onEmailChange,
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = "Email")
@@ -224,7 +221,7 @@ fun LoginFields(
         TextField(
             value = password,
             label = "Password",
-            placeholder = "Enter your password",
+            placeholder = "",
             onValueChange = onPasswordChange,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -237,7 +234,10 @@ fun LoginFields(
         )
 
         TextButton(onClick = onForgotPasswordClick, modifier = Modifier.align(Alignment.End)) {
-            Text(text = "Forgot Password?")
+            Text(
+                text = "Forgot Password?",
+                fontFamily = FontFamily(Font(R.font.inter_medium))
+            )
         }
     }
 }
@@ -253,12 +253,15 @@ fun SignInFooter(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = "Sign In"
+                text = "Sign In",
+                fontFamily = FontFamily(Font(R.font.inter_medium))
             )
         }
         TextButton(onClick = onSignUpClick) {
             Text(
-                text = "Don't have an account, click here"
+                text = "Don't have an account, click here",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
             )
         }
     }
@@ -279,14 +282,30 @@ fun TextField(
         value = value,
         onValueChange = onValueChange,
         label = {
-            Text(text = label)
+            Text(
+                text = label,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
+            )
         },
         placeholder = {
-            Text(text = placeholder)
+            Text(
+                text = placeholder,
+                fontFamily = FontFamily(Font(R.font.inter_medium))
+            )
         },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon
     )
+}
+
+@Composable
+private fun SetBarColor(color: Color) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = color
+        )
+    }
 }

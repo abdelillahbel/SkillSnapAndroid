@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.utils.PreferenceHelper
@@ -26,32 +27,31 @@ import dev.devunion.myportfolio.navigation.ScreenRoutes
 
 @Preview
 @Composable
-fun SplashScreenPreview() {
+private fun SplashScreenPreview() {
     val navController = rememberNavController()
-    SplashScreen(navController = navController)
+    SplashScreen(
+        navController = navController,
+        navigateToAuthNav = ({}),
+        navigateToMainNav = ({ })
+    )
 }
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    navController: NavController,
+    navigateToMainNav: () -> Unit,
+    navigateToAuthNav: () -> Unit
+) {
     val context = LocalContext.current
     val user = Firebase.auth.currentUser
-    val preferenceHelper: PreferenceHelper = PreferenceHelper(context)
+//    val preferenceHelper: PreferenceHelper = PreferenceHelper(context)
 
     LaunchedEffect(Unit) {
 //        delay(2000)
 
         when (user) {
-            null -> navController.navigate(ScreenRoutes.AuthNav.route) {
-                popUpTo(ScreenRoutes.SplashScreen.route) {
-                    inclusive = true
-                }
-            }
-
-            else -> navController.navigate(ScreenRoutes.MainNav.route) {
-                popUpTo(ScreenRoutes.SplashScreen.route) {
-                    inclusive = true
-                }
-            }
+            null -> navigateToAuthNav.invoke()
+            else -> navigateToMainNav.invoke()
         }
     }
     Box(

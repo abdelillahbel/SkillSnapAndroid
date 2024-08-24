@@ -2,48 +2,48 @@ package dev.devunion.myportfolio.models
 
 
 data class UserInfo(
-    val id: String, // User ID from FirebaseAuth
-    val username: String,
-    val name: String,
-    val status: String, // e.g., visitor, member, etc.
-    val avatar: String,
-    val active: Boolean,
-    val visible: Boolean,
-    val resume: String?,
-    val bio: String,
-    val role: String,
-    val about: String,
-    val education: Map<String, Education>,
-    val experience: Map<String, Experience>,
-    val projects: Map<String, Project>,
-    val contact: Contact,
-    val createdAt: Long // Timestamp of creation
+    val id: String = "",
+    val username: String = "",
+    val name: String = "",
+    val status: String = "",
+    val avatar: String = "",
+    val active: Boolean = false,
+    val visible: Boolean = false,
+    val resume: String? = null,
+    val bio: String = "",
+    val role: String = "",
+    val about: String = "",
+    val education: Map<String, Education> = mapOf(),
+    val experience: Map<String, Experience> = mapOf(),
+    val projects: Map<String, Project> = mapOf(),
+    val contact: Contact = Contact(),
+    val createdAt: Long = 0L
 )
 
 data class Education(
-    val degree: String,
-    val institution: String,
-    val year: String
+    val degree: String = "",
+    val institution: String = "",
+    val year: String = ""
 )
 
 data class Experience(
-    val title: String,
-    val company: String,
-    val period: String, // e.g., "2019 - 2024"
-    val description: String
+    val title: String = "",
+    val company: String = "",
+    val period: String = "",
+    val description: String = ""
 )
 
 data class Project(
-    val title: String,
-    val description: String,
-    val image: String?
+    val title: String = "",
+    val description: String = "",
+    val image: String? = null
 )
 
 data class Contact(
-    val email: String,
-    val phone: String?,
-    val linkedin: String?,
-    val github: String?
+    val email: String = "",
+    val phone: String? = null,
+    val linkedin: String? = null,
+    val github: String? = null
 )
 
 //val userInfo = UserInfo(
