@@ -1,5 +1,7 @@
 package dev.devunion.myportfolio.models
 
+import com.google.firebase.Timestamp
+
 
 data class UserInfo(
     val id: String = "",
@@ -17,7 +19,7 @@ data class UserInfo(
     val experience: Map<String, Experience> = mapOf(),
     val projects: Map<String, Project> = mapOf(),
     val contact: Contact = Contact(),
-    val createdAt: Long = 0L
+    val createdAt: Timestamp = Timestamp.now(),
 )
 
 data class Education(

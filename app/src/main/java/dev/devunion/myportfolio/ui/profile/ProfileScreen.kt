@@ -3,6 +3,7 @@ package dev.devunion.myportfolio.ui.profile
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -42,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -56,6 +59,8 @@ import dev.devunion.myportfolio.models.Experience
 import dev.devunion.myportfolio.models.Project
 import dev.devunion.myportfolio.models.UserInfo
 import dev.devunion.myportfolio.navigation.ScreenRoutes
+import dev.devunion.myportfolio.ui.components.LinkText
+import dev.devunion.myportfolio.ui.components.LinkTextData
 import dev.devunion.myportfolio.viewmodels.db.FirebaseFirestoreViewModel
 import dev.devunion.myportfolio.viewmodels.db.FirestoreViewModelInterface
 import java.util.UUID
@@ -75,7 +80,7 @@ fun ProfileScreen(
     var showEditExperienceDialog by remember { mutableStateOf<Pair<String, Experience>?>(null) }
     val user = Firebase.auth.currentUser
     val currentUserId = user!!.uid
-
+    var showDialog by remember { mutableStateOf(false) }
     var userInfo by remember { mutableStateOf<UserInfo?>(null) }
     var hasProfile by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -116,6 +121,30 @@ fun ProfileScreen(
         if (hasProfile) {
             userInfo?.let { user ->
                 // Display user general info
+                LinkText(
+                    linkTextData = listOf(
+                        LinkTextData(
+                            text = "Now your portfolio is live on ",
+                        ),
+                        LinkTextData(
+                            text = "www.devunion.dev/m/${user.username} .",
+                            tag = user.username,
+                            annotation = "https://www.devunion.dev/m/${user.username}",
+                            onClick = {
+//                                val uriHandler = LocalUriHandler.current
+//                                uriHandler.openUri(uri)
+                                Log.d("Link text", "${it.tag} ${it.item}")
+                            },
+                        )
+                    ),
+                    modifier = Modifier
+                        .padding(
+                            all = 16.dp,
+                        ),
+                )
+
+
+                Text(text = "Now you can check your live portfolio on: devunion.dev/m/${user.username}", style = MaterialTheme.typography.headlineSmall)
                 Text(text = "Name: ${user.name}", style = MaterialTheme.typography.headlineSmall)
                 Text(text = "Status: ${user.status}", style = MaterialTheme.typography.bodyLarge)
                 Text(text = "Role: ${user.role}", style = MaterialTheme.typography.bodyLarge)
@@ -211,8 +240,55 @@ fun ProfileScreen(
                 Button(onClick = {
                     navController.navigate(ScreenRoutes.UpdateProfileScreen.route)
                 }) {
-                    Text("Update")
+                    Text("Update portfolio")
                 }
+
+                Button(onClick = { showDialog = true }) {
+                    Text("Delete portfolio")
+                }
+
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog = false },
+                        title = { Text("Delete portfolio") },
+                        text = { Text("Dear, everything is under your control, so are you sure you want to delete your profile? This action cannot be undone!") },
+                        confirmButton = {
+                            Button(onClick = {
+                                showDialog = false
+                                viewModel.deleteUserProfile(
+                                    userId = currentUserId,
+                                    username = userInfo?.username.orEmpty(),
+                                    onSuccess = {
+                                        Toast.makeText(
+                                            context,
+                                            "Profile deleted successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        // Navigate to home
+                                        navController.navigate(ScreenRoutes.HomeScreen.route)
+                                        // Handle additional actions after deletion, like navigation
+                                    },
+                                    onFailure = { exception ->
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to delete profile: ${exception.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                )
+                            }) {
+                                Text("Confirm")
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = { showDialog = false }) {
+                                Text("Cancel")
+                            }
+                        },
+                        modifier = Modifier.animateContentSize()
+                    )
+                }
+
 
                 // Show edit dialog if needed
                 showEditExperienceDialog?.let { (id, experience) ->
@@ -237,11 +313,19 @@ fun ProfileScreen(
 
 
         } else {
-            Button(onClick = {
-                navController.navigate(ScreenRoutes.CreateProfileScreen.route)
-            }) {
-                Text("Create Profile")
+            Column(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "It looks like you don't have portfolio published yet, let's create one.")
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(onClick = {
+                    navController.navigate(ScreenRoutes.CreateProfileScreen.route)
+                }) {
+                    Text("Create Portfolio")
+                }
             }
+
         }
     }
 }
@@ -381,7 +465,8 @@ fun EditProjectDialog(
             Button(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
+        modifier = Modifier.animateContentSize()
     )
 }
 
@@ -436,7 +521,8 @@ fun EditEducationDialog(
             Button(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
+        modifier = Modifier.animateContentSize()
     )
 }
 
@@ -533,6 +619,7 @@ fun EditExperienceDialog(
             Button(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
+        modifier = Modifier.animateContentSize()
     )
 }

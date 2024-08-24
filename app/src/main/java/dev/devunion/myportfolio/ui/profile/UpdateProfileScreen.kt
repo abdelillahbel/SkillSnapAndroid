@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.models.Education
 import dev.devunion.myportfolio.models.Experience
 import dev.devunion.myportfolio.models.Project
@@ -42,19 +44,36 @@ fun UpdateProfileScreen(
     navController: NavController,
     viewModel: FirestoreViewModelInterface,
 ) {
+    val user = Firebase.auth.currentUser
     var userInfo by remember { mutableStateOf<UserInfo?>(null) }
+    var username by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
-    val username = "anis_z3"
+    val userId = user!!.uid
 
-    // Fetch user data on screen load
+    // Fetch username based on userId
     LaunchedEffect(Unit) {
-        viewModel.fetchUserInfo(
-            username = username,
-            onSuccess = { fetchedUserInfo ->
-                userInfo = fetchedUserInfo
+        viewModel.fetchUsernameByUserId(
+            userId = userId,
+            onSuccess = { fetchedUsername ->
+                username = fetchedUsername
+                // Fetch user data once username is obtained
+                viewModel.fetchUserInfo(
+                    username = fetchedUsername,
+                    onSuccess = { fetchedUserInfo ->
+                        userInfo = fetchedUserInfo
+                    },
+                    onFailure = { exception ->
+                        Toast.makeText(context, exception.message, Toast.LENGTH_SHORT).show()
+                        Log.i("TAG", "UpdateProfileScreen: ${exception.message}")
+                    }
+                )
             },
             onFailure = { exception ->
-                Toast.makeText(context, exception.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Failed to fetch username: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.i("TAG", "UpdateProfileScreen: ${exception.message}")
             }
         )
@@ -191,9 +210,9 @@ fun ExperienceSection(
             onAddExperience(
                 Experience(
                     title = "New Experience",
-                    company = "",
-                    period = "",
-                    description = ""
+                    company = "Company Name",
+                    period = "2022-2024",
+                    description = "Experience Example"
                 )
             )
         }) {
@@ -292,8 +311,8 @@ fun EducationSection(
             onAddEducation(
                 Education(
                     degree = "New Degree",
-                    institution = "",
-                    year = ""
+                    institution = "Institution",
+                    year = "2022-2024"
                 )
             )
         }) {
@@ -381,7 +400,7 @@ fun ProjectSection(
             onAddProject(
                 Project(
                     title = "New Project",
-                    description = "",
+                    description = "Project Description",
                     image = null
                 )
             )

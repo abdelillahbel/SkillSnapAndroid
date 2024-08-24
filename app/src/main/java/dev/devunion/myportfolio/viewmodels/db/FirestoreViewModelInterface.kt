@@ -4,6 +4,26 @@ import dev.devunion.myportfolio.models.UserInfo
 
 
 interface FirestoreViewModelInterface {
+
+    fun fetchUsernameByUserId(
+        userId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (Exception) -> Unit
+    )
+    fun deleteUserProfile(
+        userId: String,
+        username: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    )
+    fun updateHasProfileFlag(
+        userId: String,
+        hasProfile: Boolean,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    )
+
+
     fun checkUserHasProfile(
         userId: String,
         onSuccess: (Boolean) -> Unit,

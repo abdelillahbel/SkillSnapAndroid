@@ -3,8 +3,12 @@ package dev.devunion.myportfolio.ui.auth
 
 import androidx.navigation.NavController
 import android.util.Log
+import androidx.compose.animation.animateContentSize
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController

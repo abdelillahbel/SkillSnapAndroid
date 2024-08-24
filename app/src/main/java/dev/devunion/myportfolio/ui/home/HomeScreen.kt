@@ -34,23 +34,22 @@ fun HomeScreen(navController: NavController) {
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        GreetingSection(userName = "Johne")
+        GreetingSection()
         TaskSelectionSection {
-
         }
 
     }
 }
 
 @Composable
-fun GreetingSection(userName: String) {
+fun GreetingSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
         Text(
-            text = "Hello, $userName!",
+            text = "Hello!",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 8.dp)

@@ -9,6 +9,64 @@ class FirebaseFirestoreViewModel : FirestoreViewModelInterface, ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()
 
+    override fun updateHasProfileFlag(
+        userId: String,
+        hasProfile: Boolean,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val userDocRef = firestore.collection("users").document(userId)
+
+        userDocRef.update("hasProfile", hasProfile)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { exception -> onFailure(exception) }
+    }
+
+
+
+    override fun deleteUserProfile(
+        userId: String,
+        username: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val userProfilesRef = firestore.collection("userProfiles").document(username)
+        val userRef = firestore.collection("users").document(userId)
+
+        firestore.runBatch { batch ->
+            batch.delete(userProfilesRef)
+            batch.update(userRef, "hasProfile", false)
+        }.addOnSuccessListener {
+            onSuccess()
+        }.addOnFailureListener(onFailure)
+    }
+
+    override fun fetchUsernameByUserId(
+        userId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("userProfiles")
+            .whereEqualTo("id", userId)
+            .limit(1) // Assuming each user has a unique ID
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val document = querySnapshot.documents[0]
+                    val username = document.id
+                    onSuccess(username)
+                } else {
+                    onFailure(Exception("No user profile found for this ID"))
+                }
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
     override fun checkUserHasProfile(
         userId: String,
         onSuccess: (Boolean) -> Unit,

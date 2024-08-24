@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.models.Contact
@@ -105,9 +106,9 @@ fun CreateProfileScreen(
                         education = emptyMap(), // Assuming these will be filled later
                         experience = emptyMap(),
                         projects = emptyMap(),
-                        contact = Contact(email = "", phone = ""),
+                        contact = Contact(email = user.email.toString(), phone = ""),
                         resume = resume,
-                        createdAt = System.currentTimeMillis()
+                        createdAt = Timestamp.now(),
                     )
 
                     // Save user info to Firestore
@@ -115,44 +116,35 @@ fun CreateProfileScreen(
                         userInfo = userInfo,
                         onSuccess = {
                             // Set hasProfile flag to true in the users collection
-                            viewModel.checkUserHasProfile(
+                            viewModel.updateHasProfileFlag(
                                 userId = currentUserId,
-                                onSuccess = { hasProfile ->
-                                    if (!hasProfile) {
-                                        viewModel.saveUserInfo(
-                                            userInfo = userInfo,
-                                            onSuccess = {
-                                                Toast.makeText(
-                                                    context,
-                                                    "Profile created successfully",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                onProfileCreated() // Navigate back or to another screen
-                                            },
-                                            onFailure = { exception ->
-                                                Toast.makeText(
-                                                    context,
-                                                    "Error: ${exception.message}",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        )
-                                    }
+                                hasProfile = true,
+                                onSuccess = {
+                                    Toast.makeText(
+                                        context,
+                                        "Profile of $username created successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    onProfileCreated() // Navigate back or to another screen
                                 },
                                 onFailure = { exception ->
-                                    Toast.makeText(context, exception.message, Toast.LENGTH_SHORT)
-                                        .show()
+                                    Toast.makeText(
+                                        context,
+                                        "Error updating hasProfile flag: ${exception.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             )
                         },
                         onFailure = { exception ->
                             Toast.makeText(
                                 context,
-                                "Error: ${exception.message}",
+                                "Error saving profile: ${exception.message}",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     )
+
 
 
                 } else {
