@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.theme
 
 import androidx.compose.material3.Typography
@@ -11,12 +16,14 @@ import dev.devunion.myportfolio.R
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontFamily = FontFamily(Font(R.font.poppins_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
+
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

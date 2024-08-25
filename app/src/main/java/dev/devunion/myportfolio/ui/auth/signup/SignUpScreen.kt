@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.auth.signup
 
 import android.widget.Toast
@@ -188,12 +193,12 @@ fun SignUpHeader() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = "Sign Up", fontSize = 32.sp, fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily(Font(R.font.inter_medium))
+            fontFamily = FontFamily(Font(R.font.poppins_regular))
 
         )
         Text(
             text = "Create account for free", fontSize = 18.sp, fontWeight = FontWeight.SemiBold,
-            fontFamily = FontFamily(Font(R.font.inter_medium))
+            fontFamily = FontFamily(Font(R.font.poppins_regular))
         )
     }
 }
@@ -255,7 +260,7 @@ fun SignUpFields(
         )
 
         TextButton(onClick = onForgotPasswordClick, modifier = Modifier.align(Alignment.End)) {
-            Text(text = "Forgot Password?", fontFamily = FontFamily(Font(R.font.inter_medium)))
+            Text(text = "Forgot Password?", fontFamily = FontFamily(Font(R.font.poppins_regular)))
         }
     }
 }
@@ -272,14 +277,14 @@ fun SignUpFooter(
         ) {
             Text(
                 text = "Sign Up",
-                fontFamily = FontFamily(Font(R.font.inter_medium))
+                fontFamily = FontFamily(Font(R.font.poppins_regular))
             )
         }
         TextButton(onClick = onSignInClick) {
             Text(
                 text = "Already have account?, click here",
                 fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.inter_medium))
+                fontFamily = FontFamily(Font(R.font.poppins_regular))
             )
         }
     }
@@ -302,13 +307,13 @@ fun TextField(
         label = {
             Text(
                 text = label,
-                fontFamily = FontFamily(Font(R.font.inter_medium))
+                fontFamily = FontFamily(Font(R.font.poppins_regular))
             )
         },
         placeholder = {
             Text(
                 text = placeholder,
-                fontFamily = FontFamily(Font(R.font.inter_medium))
+                fontFamily = FontFamily(Font(R.font.poppins_regular))
             )
         },
         visualTransformation = visualTransformation,

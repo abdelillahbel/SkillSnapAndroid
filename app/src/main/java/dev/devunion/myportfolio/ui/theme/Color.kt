@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.theme
 
 import androidx.compose.ui.graphics.Color

@@ -1,7 +1,15 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.profile
 
 import android.util.Log
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,8 +30,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -88,7 +99,8 @@ fun UpdateProfileScreen(
         userInfo?.let { user ->
 
             // Updating user details like name, bio, etc.
-            TextField(
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = user.name,
                 onValueChange = { newName ->
                     userInfo = user.copy(name = newName)
@@ -96,14 +108,29 @@ fun UpdateProfileScreen(
                 label = { Text("Name") }
             )
 
-            TextField(
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = user.bio,
                 onValueChange = { newBio ->
                     userInfo = user.copy(bio = newBio)
                 },
                 label = { Text("Bio") }
             )
-
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = user.about,
+                onValueChange = { newAbout ->
+                    userInfo = user.copy(about = newAbout)
+                },
+                label = { Text("About") }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                modifier = Modifier
+                    .padding(16.dp, 8.dp),
+                text = "We're sorry, username cannot be changed (${user.username}).",
+                style = MaterialTheme.typography.bodyLarge
+            )
             // Project Section
             ProjectSection(
                 projects = user.projects,
@@ -176,6 +203,7 @@ fun UpdateProfileScreen(
         }
     }
 }
+
 
 @Composable
 fun ExperienceSection(

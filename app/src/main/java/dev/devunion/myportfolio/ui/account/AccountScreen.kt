@@ -1,10 +1,20 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.account
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.Uri
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,8 +36,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +49,7 @@ import androidx.navigation.NavController
 import dev.devunion.myportfolio.R
 import androidx.navigation.compose.rememberNavController
 import dev.devunion.myportfolio.navigation.ScreenRoutes
+import dev.devunion.myportfolio.utils.sendMail
 import dev.devunion.myportfolio.viewmodels.auth.AuthViewModelInterface
 import dev.devunion.myportfolio.viewmodels.auth.DummyAuthViewModel
 import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
@@ -59,6 +74,7 @@ fun AccountScreen(
     var userId by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
 
     // Fetch the user data when the composable is launched
     LaunchedEffect(Unit) {
@@ -73,12 +89,6 @@ fun AccountScreen(
         )
     }
 
-
-    // Placeholder for user data
-    val userName = "John Doe"
-
-    val context = LocalContext.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,7 +97,7 @@ fun AccountScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Profile Section
-        ProfileSection(userName = userId, userEmail = userEmail)
+        ProfileSection(userName = "Email :", userEmail = userEmail)
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -112,6 +122,10 @@ fun AccountScreen(
                 }
             )
         })
+        Spacer(modifier = Modifier.height(40.dp))
+        CopyRightSection()
+        Spacer(modifier = Modifier.height(80.dp))
+        ContactSupportSection(context = context)
     }
 }
 
@@ -153,6 +167,43 @@ fun ProfileSection(userName: String, userEmail: String) {
 }
 
 @Composable
+fun CopyRightSection() {
+    Column {
+        Text(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 16.dp)
+                .align(Alignment.CenterHorizontally)
+                .animateContentSize(),
+            text = "Made by DevUnion Foundation",
+            style = MaterialTheme.typography.titleMedium,
+            fontFamily = FontFamily(Font(R.font.poppins_medium)),
+            fontWeight = FontWeight.Medium
+        )
+    }
+}
+
+@Composable
+fun ContactSupportSection(context: Context) {
+    Column {
+        Text(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 16.dp)
+                .align(Alignment.CenterHorizontally)
+                .clickable {
+                    context.sendMail(
+                        to = "appshelp@devunion.dev",
+                        subject = "Help needed for my portfolio app"
+                    )
+                }
+                .animateContentSize(),
+            text = "Contact us at: appshelp@devunion.dev",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Normal
+        )
+    }
+}
+
+@Composable
 fun SettingsButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
@@ -184,7 +235,7 @@ fun LogoutButton(onClick: () -> Unit) {
     ) {
         Text(
             "Logout",
-            color = MaterialTheme.colorScheme.onError,
+            color = MaterialTheme.colorScheme.onTertiary,
             style = MaterialTheme.typography.bodyLarge
         )
     }

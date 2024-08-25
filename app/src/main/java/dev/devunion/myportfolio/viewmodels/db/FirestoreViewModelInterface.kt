@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.viewmodels.db
 
 import dev.devunion.myportfolio.models.UserInfo

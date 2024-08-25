@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. DevUnion Foundation.
+ * All rights reserved.
+ */
+
 package dev.devunion.myportfolio.ui.splash
 
 
@@ -63,7 +68,7 @@ fun SplashScreen(
         Image(
             modifier = Modifier
                 .size(150.dp),
-            painter = painterResource(id = R.drawable.ic_google_logo),
+            painter = painterResource(id = R.drawable.icon_foreground),
             contentDescription = "splash logo"
         )
     }
