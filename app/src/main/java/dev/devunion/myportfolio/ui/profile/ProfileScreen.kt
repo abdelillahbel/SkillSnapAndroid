@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -123,13 +125,27 @@ fun ProfileScreen(
         )
     }
 
+
+
     Column(
         modifier = Modifier
             .animateContentSize()
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
     ) {
+
+
+        Text(
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = "Profile",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Medium
+        )
         when {
 
             hasProfile -> {
@@ -142,8 +158,7 @@ fun ProfileScreen(
                     Card(
                         modifier = Modifier
                             .animateContentSize()
-                            .fillMaxWidth(),
-                        onClick = { }
+                            .fillMaxWidth()
                     ) {
                         Row(
                             Modifier

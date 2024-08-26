@@ -5,6 +5,8 @@
 
 package dev.devunion.myportfolio.viewmodels.db
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import dev.devunion.myportfolio.models.Contact
@@ -15,6 +17,27 @@ import dev.devunion.myportfolio.models.UserInfo
 
 
 class DummyFirestoreViewModel : FirestoreViewModelInterface, ViewModel() {
+
+
+    private val existingUsernames = setOf("johnDoe", "janeSmith", "devUser123")
+
+    override fun isUsernameAvailable(
+        username: String,
+        onSuccess: (Boolean) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        // Simulate a delay to mimic network or database query time
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (existingUsernames.contains(username)) {
+                // Username is already taken
+                onSuccess(false)
+            } else {
+                // Username is available
+                onSuccess(true)
+            }
+        }, 1000) // 1-second delay
+    }
+
 
     // Simulate a data source
     private val mockUserProfiles = mapOf(

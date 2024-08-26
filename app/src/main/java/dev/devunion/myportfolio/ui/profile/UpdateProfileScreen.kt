@@ -44,7 +44,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -72,6 +74,15 @@ fun UpdateProfileScreen(
     viewModel: FirestoreViewModelInterface,
     storageViewModel: StorageViewModelInterface
 ) {
+
+    val poppinsFamily = FontFamily(
+        Font(R.font.poppins_light, FontWeight.Light),
+        Font(R.font.poppins_regular, FontWeight.Normal),
+        Font(R.font.poppins_italic, FontWeight.Normal, FontStyle.Italic),
+        Font(R.font.poppins_medium, FontWeight.Medium),
+        Font(R.font.poppins_bold, FontWeight.Bold)
+    )
+
     val user = Firebase.auth.currentUser
     var userInfo by remember { mutableStateOf<UserInfo?>(null) }
     var username by remember { mutableStateOf<String?>(null) }
@@ -118,8 +129,20 @@ fun UpdateProfileScreen(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
     ) {
+
+        Text(
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = "Update",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Medium
+        )
+
         userInfo?.let { user ->
 
             // Avatar Image

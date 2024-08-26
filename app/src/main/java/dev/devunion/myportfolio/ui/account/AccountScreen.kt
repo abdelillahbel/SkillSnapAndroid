@@ -45,7 +45,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -78,6 +80,14 @@ fun AccountScreen(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
 
+    val poppinsFamily = FontFamily(
+        Font(R.font.poppins_light, FontWeight.Light),
+        Font(R.font.poppins_regular, FontWeight.Normal),
+        Font(R.font.poppins_italic, FontWeight.Normal, FontStyle.Italic),
+        Font(R.font.poppins_medium, FontWeight.Medium),
+        Font(R.font.poppins_bold, FontWeight.Bold)
+    )
+
     // Fetch the user data when the composable is launched
     LaunchedEffect(Unit) {
         authViewModel.getUserData(
@@ -93,10 +103,24 @@ fun AccountScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
             .verticalScroll(rememberScrollState()),  // Scrollable in case of more content
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Text(
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = "Account",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Medium
+        )
+
+
+
         when {
             user != null -> {
                 ProfileSection(userName = user!!.name, userEmail = user!!.email)

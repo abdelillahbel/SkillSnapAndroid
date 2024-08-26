@@ -7,12 +7,15 @@ package dev.devunion.myportfolio.viewmodels.db
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.models.UserInfo
 
 
 class FirebaseFirestoreViewModel : FirestoreViewModelInterface, ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()
+    private val db = Firebase.firestore
 
     override fun updateHasProfileFlag(
         userId: String,
@@ -89,6 +92,23 @@ class FirebaseFirestoreViewModel : FirestoreViewModelInterface, ViewModel() {
             }
             .addOnFailureListener(onFailure)
     }
+
+    override fun isUsernameAvailable(
+        username: String,
+        onSuccess: (Boolean) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("userProfiles")
+            .document(username)
+            .get()
+            .addOnSuccessListener { document ->
+                onSuccess(!document.exists())
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
 
     override fun fetchUserProfile(
         userId: String,

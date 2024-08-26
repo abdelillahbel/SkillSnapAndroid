@@ -20,11 +20,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -48,6 +50,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,14 +71,37 @@ fun HomeScreenPreview() {
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
+    val context = LocalContext.current
+
+    val devunionPageUrl = "https://www.devunion.dev/"
+
+    val poppinsFamily = FontFamily(
+        Font(R.font.poppins_light, FontWeight.Light),
+        Font(R.font.poppins_regular, FontWeight.Normal),
+        Font(R.font.poppins_italic, FontWeight.Normal, FontStyle.Italic),
+        Font(R.font.poppins_medium, FontWeight.Medium),
+        Font(R.font.poppins_bold, FontWeight.Bold)
+    )
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = "Home",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Medium
+        )
         // Animated Text
         AnimatedText(
             text = "People have a portfolio to showcase their skills and summary to the public, and you deserve one. Here is your portfolio.",
@@ -85,13 +111,86 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
+
+        Card(
+            modifier = Modifier
+                .animateContentSize()
+                .fillMaxWidth()
+        ) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .animateContentSize()
+                    .padding(16.dp, 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Text(
+                    modifier = Modifier
+                        .animateContentSize()
+                        .padding(start = 2.dp, end = 4.dp)
+                        .align(Alignment.CenterVertically),
+                    text = "Explore DevUnion website",
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Start,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Medium
+                )
+                Button(onClick = {
+                    CustomTabsIntent
+                        .Builder()
+                        .build()
+                        .launchUrl(context, Uri.parse(devunionPageUrl))
+                }) {
+                    Text("Visit")
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier
+                .animateContentSize()
+                .fillMaxWidth()
+        ) {
+
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .animateContentSize()
+                    .padding(16.dp, 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Text(
+                    modifier = Modifier
+                        .animateContentSize()
+                        .padding(start = 2.dp, end = 4.dp)
+                        .align(Alignment.CenterVertically),
+                    text = "Share the app with your friends",
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Start,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Medium
+                )
+                Button(onClick = {
+                    CustomTabsIntent
+                        .Builder()
+                        .build()
+                        .launchUrl(context, Uri.parse(devunionPageUrl))
+                }) {
+                    Text("Share")
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(80.dp))
         // Awesome Element: Animated Circular Progress Bar with a Glow Effect
         AwesomeCircularProgressBar(
             progress = 0.75f, // Example progress
-            size = 150.dp,
-            strokeWidth = 12.dp,
-            colors = listOf(Color(0xFF00E676), Color(0xFF1DE9B6)), // Gradient colors
-            glowColor = Color(0xFF1DE9B6),//0xFF42A5F5
+            size = 200.dp,
+            strokeWidth = 18.dp,
+            colors = listOf(Color(0xFF1E88E5), Color(0xFF1E88E5)), // Gradient colors
+            glowColor = Color(0xFF1E88E5),//0xFF42A5F5
             animationDuration = 5000
         )
     }
@@ -105,19 +204,19 @@ fun AnimatedText(
     fontFamily: FontFamily,
     modifier: Modifier = Modifier
 ) {
-    val animatedAlpha = remember { Animatable(0f) }
-
-    LaunchedEffect(Unit) {
-        animatedAlpha.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(durationMillis = 5000)
-        )
-    }
+//    val animatedAlpha = remember { Animatable(0f) }
+//
+//    LaunchedEffect(Unit) {
+//        animatedAlpha.animateTo(
+//            targetValue = 1f,
+//            animationSpec = tween(durationMillis = 5000)
+//        )
+//    }
 
     Text(
         text = text,
         fontSize = fontSize,
-        color = color.copy(alpha = animatedAlpha.value),
+//        color = color.copy(alpha = animatedAlpha.value),
         fontFamily = fontFamily,
         textAlign = TextAlign.Center,
         modifier = modifier
