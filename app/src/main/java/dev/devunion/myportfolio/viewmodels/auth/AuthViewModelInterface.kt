@@ -10,6 +10,7 @@ import dev.devunion.myportfolio.models.User
 
 interface AuthViewModelInterface {
 
+    var name: String
     var email: String
     var password: String
     var confirmPassword: String
@@ -28,5 +29,9 @@ interface AuthViewModelInterface {
 
     fun recoverPassword(onSuccess: () -> Unit, onFailure: (exception: Exception) -> Unit)
     fun getUser(onSuccess: (result: User) -> Unit, onFailure: (exception: Exception) -> Unit)
+    fun getUserData(
+        onSuccess: (user: User) -> Unit,
+        onFailure: (exception: Exception) -> Unit
+    )
     fun logout(onSuccess: () -> Unit, onFailure: (exception: Exception) -> Unit)
 }

@@ -16,7 +16,7 @@ data class UserInfo(
     val avatar: String = "",
     val active: Boolean = false,
     val visible: Boolean = false,
-    val resume: String? = null,
+    val resume: String = "",
     val bio: String = "",
     val role: String = "",
     val about: String = "",
@@ -48,9 +48,9 @@ data class Project(
 
 data class Contact(
     val email: String = "",
-    val phone: String? = null,
-    val linkedin: String? = null,
-    val github: String? = null
+    val phone: String = "",
+    val linkedin: String = "",
+    val github: String = ""
 )
 
 //val userInfo = UserInfo(

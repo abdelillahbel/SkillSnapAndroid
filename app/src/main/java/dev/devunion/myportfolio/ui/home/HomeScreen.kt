@@ -92,7 +92,7 @@ fun HomeScreen(navController: NavController) {
             strokeWidth = 12.dp,
             colors = listOf(Color(0xFF00E676), Color(0xFF1DE9B6)), // Gradient colors
             glowColor = Color(0xFF1DE9B6),//0xFF42A5F5
-            animationDuration = 12000
+            animationDuration = 5000
         )
     }
 }

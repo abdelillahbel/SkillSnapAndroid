@@ -19,6 +19,13 @@ class DummyAuthViewModel : AuthViewModelInterface, ViewModel() {
 
     private val user = Firebase.auth.currentUser
 
+    private var _name: String by mutableStateOf("")
+    override var name: String
+        get() = _name
+        set(value) {
+            _name = value
+        }
+
     private var _email: String by mutableStateOf("")
     override var email: String
         get() = _email
@@ -46,8 +53,8 @@ class DummyAuthViewModel : AuthViewModelInterface, ViewModel() {
     ) {
         viewModelScope.launch {
             val result = async {
-                if (email.isNotEmpty() && password.isNotEmpty() && password == confirmPassword) {
-                    User(id = user!!.uid, email = email)
+                if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && password == confirmPassword) {
+                    User(id = user!!.uid, email = email, name = name)
                 } else {
                     throw Exception("Email or password is empty.")
                 }
@@ -103,7 +110,7 @@ class DummyAuthViewModel : AuthViewModelInterface, ViewModel() {
     ) {
         viewModelScope.launch {
             val result = async {
-                User(id = user!!.uid, email = email)
+                User(id = user!!.uid, email = email, name = name)
             }
             try {
                 onSuccess(result.await())
@@ -113,6 +120,18 @@ class DummyAuthViewModel : AuthViewModelInterface, ViewModel() {
         }
     }
 
+    override fun getUserData(
+        onSuccess: (user: User) -> Unit,
+        onFailure: (exception: Exception) -> Unit
+    ) {
+        // Simulate a successful retrieval of user data
+        val dummyUser = User(
+            id = "dummy-id",
+            email = "dummy@example.com",
+            name = "Dummy User"
+        )
+        onSuccess(dummyUser)
+    }
     override fun logout(onSuccess: () -> Unit, onFailure: (exception: Exception) -> Unit) {
         onSuccess()
     }

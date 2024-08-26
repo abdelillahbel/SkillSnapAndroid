@@ -8,6 +8,8 @@ package dev.devunion.myportfolio.utils
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 
@@ -36,5 +38,16 @@ fun Context.dial(phone: String) {
         startActivity(intent)
     } catch (t: Throwable) {
         // TODO: Handle potential exceptions
+    }
+}
+
+
+fun getBitmapFromUri(context: Context, uri: Uri): Bitmap? {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        BitmapFactory.decodeStream(inputStream)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 }

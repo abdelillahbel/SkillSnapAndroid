@@ -21,6 +21,14 @@ class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = FirebaseFirestore.getInstance()
 
+    private var _name: String by mutableStateOf("")
+    override var name: String
+        get() = _name
+        set(value) {
+            _name = value
+        }
+
+
     private var _email: String by mutableStateOf("")
     override var email: String
         get() = _email
@@ -49,7 +57,13 @@ class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onSuccess(User(id = auth.currentUser?.uid ?: "", email = email))
+                    onSuccess(
+                        User(
+                            id = auth.currentUser?.uid ?: "",
+                            name = name.trimEnd().trimStart(),
+                            email = email.trim()
+                        )
+                    )
                 } else {
                     onFailure(task.exception ?: Exception("Unknown exception."))
                 }
@@ -63,7 +77,13 @@ class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onSuccess(User(id = auth.currentUser?.uid ?: "", email = email))
+                    onSuccess(
+                        User(
+                            id = auth.currentUser?.uid ?: "",
+                            name = name.trimEnd().trimStart(),
+                            email = email
+                        )
+                    )
                 } else {
                     onFailure(task.exception ?: Exception("Unknown exception."))
                 }
@@ -75,7 +95,7 @@ class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
         onFailure: (exception: Exception) -> Unit
     ) {
         val userId = auth.currentUser!!.uid
-        val userData = User(id = userId, email = email)
+        val userData = User(id = userId, name = name.trimEnd().trimStart(), email = email)
 
         firestore.collection("users")
             .document(userId)
@@ -113,11 +133,41 @@ class FirebaseAuthViewModel : AuthViewModelInterface, ViewModel() {
     ) {
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            onSuccess(User(id = currentUser.uid, email = currentUser.email ?: ""))
+            onSuccess(User(id = currentUser.uid, name = name, email = currentUser.email ?: ""))
         } else {
             onFailure(Exception("User is not logged in."))
         }
     }
+
+    override fun getUserData(
+        onSuccess: (result: User) -> Unit,
+        onFailure: (exception: Exception) -> Unit
+    ) {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            firestore.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val user = document.toObject(User::class.java)
+                        user?.let {
+                            onSuccess(it)
+                        } ?: run {
+                            onFailure(Exception("User data is null"))
+                        }
+                    } else {
+                        onFailure(Exception("User does not exist"))
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
+        } else {
+            onFailure(Exception("User is not logged in"))
+        }
+    }
+
 
     override fun logout(onSuccess: () -> Unit, onFailure: (exception: Exception) -> Unit) {
         try {

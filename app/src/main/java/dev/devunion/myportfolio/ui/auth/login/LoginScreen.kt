@@ -6,6 +6,7 @@
 package dev.devunion.myportfolio.ui.auth.login
 
 
+import android.util.Patterns
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -159,16 +160,39 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
                 )
                 SignInFooter(
                     onSignInClick = {
-                        authViewModel.login(
-                            onSuccess = {
-                                navController.popBackStack()
-                                navController.navigate(ScreenRoutes.MainNav.route)
-                            },
-                            onFailure = { exception ->
-                                dialogMessage = exception.message.toString()
+
+                        when {
+                            authViewModel.email.isEmpty() -> {
+                                val emailError = "Email cannot be empty"
+                                dialogMessage = emailError
                                 showDialog = true
                             }
-                        )
+
+                            !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
+                                val emailError = "Please enter a valid email address"
+                                dialogMessage = emailError
+                                showDialog = true
+                            }
+
+                            authViewModel.password.isEmpty() -> {
+                                val passwordError = "Password cannot be empty"
+                                dialogMessage = passwordError
+                                showDialog = true
+                            }
+
+                            else -> {
+                                authViewModel.login(
+                                    onSuccess = {
+                                        navController.popBackStack()
+                                        navController.navigate(ScreenRoutes.MainNav.route)
+                                    },
+                                    onFailure = { exception ->
+                                        dialogMessage = exception.message.toString()
+                                        showDialog = true
+                                    }
+                                )
+                            }
+                        }
                     },
                     onSignUpClick = {
                         navController.navigate(ScreenRoutes.SignUpScreen.route) {

@@ -5,6 +5,7 @@
 
 package dev.devunion.myportfolio.ui.auth.signup
 
+import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -25,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -138,9 +140,11 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
                 SignUpHeader()
                 Spacer(modifier = Modifier.height(20.dp))
                 SignUpFields(
+                    name = authViewModel.name,
                     email = authViewModel.email,
                     password = authViewModel.password,
                     confirmPassword = authViewModel.confirmPassword,
+                    onNameChange = { authViewModel.name = it },
                     onEmailChange = { authViewModel.email = it },
                     onPasswordChange = { authViewModel.password = it },
                     onConfirmPasswordChange = { authViewModel.confirmPassword = it },
@@ -155,29 +159,77 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
                         navController.navigate(ScreenRoutes.LoginScreen.route)
                     },
                     onSignUpClick = {
-                        authViewModel.register(
-                            onSuccess = {
-                                authViewModel.saveUserData(
+
+
+                        // Validate input fields
+                        when {
+                            authViewModel.name.isEmpty() -> {
+                                val nameError = "Name cannot be empty"
+                                dialogMessage = nameError
+                                showDialog = true
+                            }
+
+                            authViewModel.email.isEmpty() -> {
+                                val emailError = "Email cannot be empty"
+                                dialogMessage = emailError
+                                showDialog = true
+                            }
+
+                            !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
+                                val emailError = "Please enter a valid email address"
+                                dialogMessage = emailError
+                                showDialog = true
+                            }
+
+                            authViewModel.password.isEmpty() -> {
+                                val passwordError = "Password cannot be empty"
+                                dialogMessage = passwordError
+                                showDialog = true
+                            }
+
+                            authViewModel.password.length < 6 -> {
+                                val passwordError = "Password must be at least 6 characters"
+                                dialogMessage = passwordError
+                                showDialog = true
+                            }
+
+                            authViewModel.confirmPassword.isEmpty() -> {
+                                val confirmPasswordError = "Please confirm your password"
+                                dialogMessage = confirmPasswordError
+                                showDialog = true
+                            }
+
+                            authViewModel.confirmPassword != authViewModel.password -> {
+                                val confirmPasswordError = "Passwords do not match"
+                                dialogMessage = confirmPasswordError
+                                showDialog = true
+                            }
+
+                            else -> {
+                                // Proceed with Firebase Auth
+                                authViewModel.register(
                                     onSuccess = {
-                                        navController.navigate(ScreenRoutes.MainNav.route) {
-                                            popUpTo(ScreenRoutes.SignUpScreen.route) {
-                                                inclusive = true
+                                        authViewModel.saveUserData(
+                                            onSuccess = {
+                                                navController.navigate(ScreenRoutes.MainNav.route) {
+                                                    popUpTo(ScreenRoutes.SignUpScreen.route) {
+                                                        inclusive = true
+                                                    }
+                                                }
+                                            },
+                                            onFailure = { exception ->
+                                                dialogMessage = exception.message.toString()
+                                                showDialog = true
                                             }
-                                        }
+                                        )
                                     },
                                     onFailure = { exception ->
                                         dialogMessage = exception.message.toString()
                                         showDialog = true
                                     }
-
                                 )
-
-                            },
-                            onFailure = { exception ->
-                                dialogMessage = exception.message.toString()
-                                showDialog = true
                             }
-                        )
+                        }
                     }
                 )
             }
@@ -205,13 +257,32 @@ fun SignUpHeader() {
 
 @Composable
 fun SignUpFields(
-    email: String, password: String, confirmPassword: String,
+    name: String,
+    email: String,
+    password: String,
+    confirmPassword: String,
+    onNameChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onConfirmPasswordChange: (String) -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
     Column {
+        TextField(
+            value = name,
+            label = "Name",
+            placeholder = "",
+            onValueChange = onNameChange,
+            leadingIcon = {
+                Icon(Icons.Default.Person, contentDescription = "Name")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            )
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
         TextField(
             value = email,
             label = "Email",
@@ -236,7 +307,7 @@ fun SignUpFields(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Next
             ),
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Password")

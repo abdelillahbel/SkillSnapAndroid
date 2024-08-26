@@ -26,6 +26,7 @@ import dev.devunion.myportfolio.ui.updates.UpdatesScreen
 import dev.devunion.myportfolio.utils.PreferenceHelper
 import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
 import dev.devunion.myportfolio.viewmodels.db.FirebaseFirestoreViewModel
+import dev.devunion.myportfolio.viewmodels.storage.FirebaseStorageViewModel
 
 @Composable
 fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
@@ -61,9 +62,11 @@ fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
 
         composable(route = ScreenRoutes.UpdateProfileScreen.route) {
             val firestoreViewModel = FirebaseFirestoreViewModel()
+            val storageViewModel = FirebaseStorageViewModel()
             UpdateProfileScreen(
                 navController = navController,
-                viewModel = firestoreViewModel
+                viewModel = firestoreViewModel,
+                storageViewModel = storageViewModel
             )
         }
 
