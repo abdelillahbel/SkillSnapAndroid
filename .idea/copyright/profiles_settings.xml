@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
   <settings default="DevUnion Foundation">
     <module2copyright>
-      <element module="Project Files" copyright="DevUnion Foundation" />
+      <element module="All" copyright="DevUnion Foundation" />
     </module2copyright>
   </settings>
 </component>
