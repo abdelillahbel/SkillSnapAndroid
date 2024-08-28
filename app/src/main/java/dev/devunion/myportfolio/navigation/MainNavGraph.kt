@@ -1,38 +1,33 @@
 /*
  * Copyright (c) 2024. DevUnion Foundation.
+ * GitHub: https://github.com/devunionorg
  * All rights reserved.
+ *
+ * This project was conceptualized and developed by @abdelillahbel.
+ * GitHub: https://github.com/abdelillahbel
  */
 
 package dev.devunion.myportfolio.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.ui.account.AccountScreen
-import dev.devunion.myportfolio.ui.auth.login.LoginScreen
-import dev.devunion.myportfolio.ui.auth.reset_password.ResetPasswordScreen
-import dev.devunion.myportfolio.ui.auth.signup.SignUpScreen
 import dev.devunion.myportfolio.ui.home.HomeScreen
-import dev.devunion.myportfolio.ui.main.MainScreen
 import dev.devunion.myportfolio.ui.profile.CreateProfileScreen
 import dev.devunion.myportfolio.ui.profile.ProfileScreen
 import dev.devunion.myportfolio.ui.profile.UpdateProfileScreen
-import dev.devunion.myportfolio.ui.splash.SplashScreen
 import dev.devunion.myportfolio.ui.updates.UpdatesScreen
-import dev.devunion.myportfolio.utils.PreferenceHelper
 import dev.devunion.myportfolio.viewmodels.auth.FirebaseAuthViewModel
 import dev.devunion.myportfolio.viewmodels.db.FirebaseFirestoreViewModel
 import dev.devunion.myportfolio.viewmodels.storage.FirebaseStorageViewModel
 
 @Composable
 fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
-    val user = Firebase.auth.currentUser
-    val context = LocalContext.current
-    val preferenceHelper: PreferenceHelper = PreferenceHelper(context)
+    // val user = Firebase.auth.currentUser
+    // val context = LocalContext.current
+    // val preferenceHelper: PreferenceHelper = PreferenceHelper(context)
 
     NavHost(
         navController = navController,

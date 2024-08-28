@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2024. DevUnion Foundation.
+ * GitHub: https://github.com/devunionorg
  * All rights reserved.
+ *
+ * This project was conceptualized and developed by @abdelillahbel.
+ * GitHub: https://github.com/abdelillahbel
  */
 
 package dev.devunion.myportfolio.utils
@@ -14,7 +18,7 @@ import android.net.Uri
 import android.os.Build
 
 
-public fun shouldShowSplashScreen(currentApiVersion: Int): Boolean {
+fun shouldShowSplashScreen(currentApiVersion: Int): Boolean {
     return currentApiVersion < Build.VERSION_CODES.S
 }
 
