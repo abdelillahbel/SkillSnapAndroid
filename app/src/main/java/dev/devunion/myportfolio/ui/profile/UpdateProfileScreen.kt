@@ -10,10 +10,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,22 +45,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.myportfolio.R
-import dev.devunion.myportfolio.models.Contact
 import dev.devunion.myportfolio.models.Education
 import dev.devunion.myportfolio.models.Experience
 import dev.devunion.myportfolio.models.Project
 import dev.devunion.myportfolio.models.UserInfo
 import dev.devunion.myportfolio.utils.getBitmapFromUri
-import dev.devunion.myportfolio.viewmodels.db.FirebaseFirestoreViewModel
 import dev.devunion.myportfolio.viewmodels.db.FirestoreViewModelInterface
 import dev.devunion.myportfolio.viewmodels.storage.StorageViewModelInterface
 import java.util.UUID
@@ -153,6 +146,11 @@ fun UpdateProfileScreen(
                     modifier = Modifier
                         .size(120.dp)
                         .clip(CircleShape)
+                        .border(
+                            width = 1.dp,
+                            color = Color.White,
+                            shape = CircleShape
+                        )
                         .background(colorScheme.surface)
                         .clickable {
                             imagePickerLauncher.launch("image/*")
@@ -163,8 +161,14 @@ fun UpdateProfileScreen(
                     painter = rememberAsyncImagePainter(user.avatar),
                     contentDescription = null,
                     modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
                         .size(120.dp)
                         .clip(CircleShape)
+                        .border(
+                            width = 1.dp,
+                            color = Color.White,
+                            shape = CircleShape
+                        )
                         .background(colorScheme.surface)
                         .clickable {
                             imagePickerLauncher.launch("image/*")
