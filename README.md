@@ -1,43 +1,57 @@
-# DevUnion Mobile App
+# My-Portfolio Android App
 
-DevUnion is a mobile application designed to help users create and manage their professional
-profiles. The app allows users to showcase their skills, projects, and experiences in a beautifully
-designed and interactive interface.
-
-#### This app is working side by side with web platform (www.devunion.dev)
+My-Portfolio is an open-source Android application designed to help users easily create and manage
+their portfolios. The app provides a personalized portfolio with a unique URL, SEO-ready pages, and
+user-controlled data. It supports both light and dark modes, making it visually appealing on any
+device.
 
 ## Features
 
-- User authentication with Firebase.
-- Create, update, and delete user profiles.
-- Display user information, including name, bio, avatar, and more.
-- Upload and manage resume and other documents.
-- Animated and visually appealing components.
-- Error handling for username availability and other operations.
+- 🌑 **Light & Dark Modes**: Choose between light and dark themes to match your style.
+- 🚀 **SEO-Ready Portfolios**: Your portfolio will be optimized for search engines.
+- 🔒 **User-Controlled Data**: Your data stays under your control, always.
+- 🌐 **Cross-Platform Access**: View your portfolio on the web, with a unique URL.
+- 🎨 **Customizable Profiles**: Update and manage your portfolio with ease.
 
-## Technology Stack
+## Screenshots
 
-- **MVVM Arch** : Project architecture.
-- **Kotlin**: Primary language for Android development.
-- **Jetpack Compose**: For building the UI components.
-- **Firebase Authentication**: For user authentication.
-- **Firebase Firestore**: For storing user profiles.
-- **Firebase Storage**: For storing user avatar images and documents.
+<table>
+  <tr>
+    <td><img src="screenshots/Screenshot_20240828_224302.png" alt="Screenshot 1" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_230204.png" alt="Screenshot 2" style="width:100%; max-width:720px;"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20240828_230526.png" alt="Screenshot 3" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231008.png" alt="Screenshot 4" style="width:100%; max-width:720px;"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20240828_231233.png" alt="Screenshot 5" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231303.png" alt="Screenshot 6" style="width:100%; max-width:720px;"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20240828_231445.png" alt="Screenshot 7" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231617.png" alt="Screenshot 8" style="width:100%; max-width:720px;"/></td>
+  </tr>
+</table>
 
-#### Tested using firebase test lab.
+## Getting Started
 
-## Installation
+1. **Clone the repo**: `git clone https://github.com/abdelillahbel/my-portfolio-android-app.git`
+2. **Open in Android Studio**: Import the project into Android Studio.
+3. **Build & Run**: Build the app and run it on your device or emulator.
 
-To set up and run the project locally:
+## Contributing
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/abdelillahbel/my-portfolio-android-app.git
-   cd my-portfolio-android-app
-2. Open the project in Android Studio.
+Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more
+information on how to contribute to this project.
 
-3. Sync the project with Gradle files.
+## License
 
-4. Set up Firebase in your project by adding your google-services.json file to the app directory.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-5. Run the app on an emulator or a physical device.
+## Contact
+
+For any inquiries or feedback, feel free to reach out
+to [@abdelillahbel](https://github.com/abdelillahbel) on GitHub.
+
+*Copyright (c) 2024. DevUnion Foundation. All rights reserved.*
