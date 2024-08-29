@@ -1,6 +1,6 @@
-# My-Portfolio Android App
+# SkillSnap Android App
 
-My-Portfolio is an open-source Android application designed to help users easily create and manage
+SkillSnap is an open-source Android application designed to help users easily create and manage
 their portfolios. The app provides a personalized portfolio with a unique URL, SEO-ready pages, and
 user-controlled data. It supports both light and dark modes, making it visually appealing on any
 device.
@@ -36,7 +36,7 @@ device.
 
 ## Getting Started
 
-1. **Clone the repo**: `git clone https://github.com/abdelillahbel/my-portfolio-android-app.git`
+1. **Clone the repo**: `git clone https://github.com/abdelillahbel/SkillSnapAndroid.git`
 2. **Open in Android Studio**: Import the project into Android Studio.
 3. **Build & Run**: Build the app and run it on your device or emulator.
 
