@@ -8,7 +8,7 @@ make this project great.
 ### Reporting Bugs
 
 If you find a bug in the project, please report it by creating
-a [GitHub issue](https://github.com/abdelillahbel/my-portfolio-android-app/issues). Include as much
+a [GitHub issue](https://github.com/abdelillahbel/SkillSnapAndroid/issues). Include as much
 detail as possible, such as how to reproduce the issue, screenshots, and any relevant logs.
 
 ### Suggesting Enhancements
@@ -21,7 +21,7 @@ submitting a pull request.
 1. **Fork** the repository to your own GitHub account.
 2. **Clone** the repository to your local machine:
    ```bash
-   git clone https://github.com/abdelillahbel/my-portfolio-android-app.git
+   git clone https://github.com/abdelillahbel/SkillSnapAndroid.git
    ```
 
 ### Create a new branch for your changes:

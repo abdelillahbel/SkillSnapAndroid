@@ -28,5 +28,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Portfolio"
+rootProject.name = "SkillSnap App"
 include(":app")

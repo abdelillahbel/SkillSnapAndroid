@@ -14,11 +14,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.devunion.myportfolio"
+    namespace = "dev.devunion.skillsnap"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.devunion.myportfolio"
+        applicationId = "dev.devunion.skillsnap"
         minSdk = 24
         targetSdk = 34
         versionCode = 2
