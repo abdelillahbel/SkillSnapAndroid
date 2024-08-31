@@ -50,6 +50,7 @@ fun MainNavGraph(navController: NavHostController, logout: () -> Unit) {
             CreateProfileScreen(
                 navController = navController,
                 viewModel = firestoreViewModel,
+                storageViewModel = FirebaseStorageViewModel(),
                 onProfileCreated = {
                     navController.popBackStack() // Navigate back to profile screen
                 })

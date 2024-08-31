@@ -10,7 +10,6 @@
 package dev.devunion.skillsnap.navigation
 
 import android.os.Build
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -55,7 +54,7 @@ fun RootNav(navController: NavHostController) {
 
     ) {
 
-        AuthNav(navController)
+        authNav(navController)
 
         composable(route = ScreenRoutes.MainNav.route) {
             MainScreen(navController,
