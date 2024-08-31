@@ -19,6 +19,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -73,13 +74,6 @@ import dev.devunion.skillsnap.models.UserInfo
 import dev.devunion.skillsnap.navigation.ScreenRoutes
 import dev.devunion.skillsnap.viewmodels.db.FirestoreViewModelInterface
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    val navController = rememberNavController()
-    // ProfileScreen(navController = navController)
-}
-
 @Composable
 fun ProfileScreen(
     navController: NavController,
@@ -91,6 +85,7 @@ fun ProfileScreen(
     var showDialog by remember { mutableStateOf(false) }
     var userInfo by remember { mutableStateOf<UserInfo?>(null) }
     var hasProfile by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
     val poppinsFamily = FontFamily(
@@ -116,337 +111,356 @@ fun ProfileScreen(
                         userId = currentUserId,
                         onSuccess = { fetchedUserInfo ->
                             userInfo = fetchedUserInfo
+                            isLoading = false // Stop loading after data is fetched
                         },
                         onFailure = { exception ->
                             Toast.makeText(context, exception.message, Toast.LENGTH_SHORT).show()
+                            isLoading = false // Stop loading even if an error occurs
                         }
                     )
+                } else {
+                    isLoading = false // Stop loading if no profile exists
                 }
             },
             onFailure = { exception ->
                 Toast.makeText(context, exception.message, Toast.LENGTH_SHORT).show()
+                isLoading = false // Stop loading if an error occurs
             }
         )
     }
 
+    if (isLoading) {
+        // Show loading indicator in the center of the screen
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
 
-
-    Column(
-        modifier = Modifier
-            .animateContentSize()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-    ) {
-
-
-        Text(
+        Column(
             modifier = Modifier
-                .padding(bottom = 16.dp)
-                .align(Alignment.CenterHorizontally),
-            text = "Profile",
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center,
-            fontFamily = poppinsFamily,
-            fontWeight = FontWeight.Medium
-        )
-        when {
-
-            hasProfile -> {
-                userInfo?.let { user ->
-                    // Display user general info
-
-                    val profilePageUrl = "https://www.devunion.dev/m/${user.username}"
+                .animateContentSize()
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+        ) {
 
 
-                    Card(
-                        modifier = Modifier
-                            .animateContentSize()
-                            .fillMaxWidth()
-                    ) {
-                        Row(
+            Text(
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = "Profile",
+                style = MaterialTheme.typography.headlineLarge,
+                textAlign = TextAlign.Center,
+                fontFamily = poppinsFamily,
+                fontWeight = FontWeight.Medium
+            )
+            when {
+
+                hasProfile -> {
+                    userInfo?.let { user ->
+                        // Display user general info
+
+                        val profilePageUrl = "https://www.devunion.dev/m/${user.username}"
+
+
+                        Card(
+                            modifier = Modifier
+                                .animateContentSize()
+                                .fillMaxWidth()
+                        ) {
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .animateContentSize()
+                                    .padding(16.dp, 8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+
+                                Text(
+                                    modifier = Modifier
+                                        .animateContentSize()
+                                        .padding(start = 2.dp, end = 4.dp)
+                                        .align(Alignment.CenterVertically),
+                                    text = "Your portfolio is live now 🎉",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Start,
+                                    fontFamily = poppinsFamily,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Button(onClick = {
+                                    CustomTabsIntent
+                                        .Builder()
+                                        .build()
+                                        .launchUrl(context, Uri.parse(profilePageUrl))
+                                }) {
+                                    Text("Open")
+                                }
+                            }
+                        }
+
+
+
+
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Card(
                             Modifier
                                 .fillMaxWidth()
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-
                             Text(
                                 modifier = Modifier
                                     .animateContentSize()
-                                    .padding(start = 2.dp, end = 4.dp)
-                                    .align(Alignment.CenterVertically),
-                                text = "Your portfolio is live now 🎉",
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Start,
-                                fontFamily = poppinsFamily,
-                                fontWeight = FontWeight.Bold
+                                    .padding(16.dp, 8.dp),
+                                text = "Name: ${user.name}",
+                                style = MaterialTheme.typography.headlineSmall
                             )
-                            Button(onClick = {
-                                CustomTabsIntent
-                                    .Builder()
-                                    .build()
-                                    .launchUrl(context, Uri.parse(profilePageUrl))
-                            }) {
-                                Text("Open")
-                            }
+
                         }
-                    }
+                        Spacer(modifier = Modifier.height(12.dp))
 
+                        Card(
+                            Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .animateContentSize()
+                                    .padding(16.dp, 8.dp),
+                                text = "Status: ${user.status}",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
 
-
-
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Card(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            text = "Name: ${user.name}",
-                            style = MaterialTheme.typography.headlineSmall
-                        )
-
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Card(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            text = "Status: ${user.status}",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Card(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            text = "Role: ${user.role}",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Card(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            text = "Bio: ${user.bio}",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Card(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .animateContentSize()
-                                .padding(16.dp, 8.dp),
-                            text = "About: ${user.about}",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Projects section
-                    ExpandableSection(
-                        title = "Projects",
-                        content = {
-                            user.projects.forEach { (id, project) ->
-                                ProjectItem(
-                                    project = project,
-                                    onUpdate = { updatedProject ->
-                                        val updatedProjects = user.projects.toMutableMap()
-                                        updatedProjects[id] = updatedProject
-                                        viewModel.saveUserInfo(
-                                            user.copy(projects = updatedProjects),
-                                            onSuccess = {
-                                                // Handle success
-                                            },
-                                            onFailure = { exception ->
-                                                // Handle failure
-                                            })
-                                    }
-                                )
-                            }
                         }
-                    )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Card(
+                            Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .animateContentSize()
+                                    .padding(16.dp, 8.dp),
+                                text = "Role: ${user.role}",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
 
-                    // Education section
-                    ExpandableSection(
-                        title = "Education",
-                        content = {
-                            user.education.forEach { (id, education) ->
-                                EducationItem(
-                                    education = education,
-                                    onUpdate = { updatedEducation ->
-                                        val updatedEducationMap = user.education.toMutableMap()
-                                        updatedEducationMap[id] = updatedEducation
-                                        viewModel.saveUserInfo(
-                                            user.copy(education = updatedEducationMap),
-                                            onSuccess = {
-                                                // Handle success
-                                            },
-                                            onFailure = { exception ->
-                                                // Handle failure
-                                            })
-                                    }
-                                )
-                            }
                         }
-                    )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Card(
+                            Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .animateContentSize()
+                                    .padding(16.dp, 8.dp),
+                                text = "Bio: ${user.bio}",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
 
-                    // Experience section
-                    ExpandableSection(
-                        title = "Experience",
-                        content = {
-                            user.experience.forEach { (id, experience) ->
-                                ExperienceItem(
-                                    experience = experience,
-                                    onUpdate = { updatedExperience ->
-                                        val updatedExperienceMap = user.experience.toMutableMap()
-                                        updatedExperienceMap[id] = updatedExperience
-                                        viewModel.saveUserInfo(
-                                            user.copy(experience = updatedExperienceMap),
-                                            onSuccess = {
-                                                // Handle success
-                                            },
-                                            onFailure = { exception ->
-                                                // Handle failure
-                                            })
-                                    }
-                                )
-                            }
                         }
-                    )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Card(
+                            Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .animateContentSize()
+                                    .padding(16.dp, 8.dp),
+                                text = "About: ${user.about}",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        }
 
-                    Button(onClick = {
-                        viewModel.saveUserInfo(user, onSuccess = {
-                            // Handle success
-                        }, onFailure = { exception ->
-                            // Handle failure
-                        })
-                    }) {
-                        Text("Save Changes")
-                    }
+                        Spacer(modifier = Modifier.height(16.dp))
 
-                    Button(onClick = {
-                        navController.navigate(ScreenRoutes.UpdateProfileScreen.route)
-                    }) {
-                        Text("Update portfolio")
-                    }
-
-                    Button(onClick = { showDialog = true }) {
-                        Text("Delete portfolio")
-                    }
-
-                    if (showDialog) {
-                        AlertDialog(
-                            onDismissRequest = { showDialog = false },
-                            title = { Text("Delete portfolio") },
-                            text = { Text("Dear, everything is under your control, so are you sure you want to delete your profile? This action cannot be undone!") },
-                            confirmButton = {
-                                Button(onClick = {
-                                    showDialog = false
-                                    viewModel.deleteUserProfile(
-                                        userId = currentUserId,
-                                        username = userInfo?.username.orEmpty(),
-                                        onSuccess = {
-                                            Toast.makeText(
-                                                context,
-                                                "Profile deleted successfully",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            // Navigate to home
-                                            navController.navigate(ScreenRoutes.HomeScreen.route)
-                                            // Handle additional actions after deletion, like navigation
-                                        },
-                                        onFailure = { exception ->
-                                            Toast.makeText(
-                                                context,
-                                                "Failed to delete profile: ${exception.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                        // Projects section
+                        ExpandableSection(
+                            title = "Projects",
+                            content = {
+                                user.projects.forEach { (id, project) ->
+                                    ProjectItem(
+                                        project = project,
+                                        onUpdate = { updatedProject ->
+                                            val updatedProjects = user.projects.toMutableMap()
+                                            updatedProjects[id] = updatedProject
+                                            viewModel.saveUserInfo(
+                                                user.copy(projects = updatedProjects),
+                                                onSuccess = {
+                                                    // Handle success
+                                                },
+                                                onFailure = { exception ->
+                                                    // Handle failure
+                                                })
                                         }
                                     )
-                                }) {
-                                    Text("Confirm")
                                 }
-                            },
-                            dismissButton = {
-                                Button(onClick = { showDialog = false }) {
-                                    Text("Cancel")
-                                }
-                            },
-                            modifier = Modifier.animateContentSize()
-                        )
-                    }
-
-
-                    // Show edit dialog if needed
-                    showEditExperienceDialog?.let { (id, experience) ->
-                        EditExperienceDialog(
-                            experience = experience,
-                            onDismiss = { showEditExperienceDialog = null },
-                            onSave = { updatedExperience ->
-                                val updatedExperienceMap = user.experience.toMutableMap()
-                                updatedExperienceMap[id] = updatedExperience
-                                viewModel.saveUserInfo(
-                                    user.copy(experience = updatedExperienceMap),
-                                    onSuccess = {
-                                        // Handle success
-                                    },
-                                    onFailure = { exception ->
-                                        // Handle failure
-                                    })
                             }
                         )
+
+                        // Education section
+                        ExpandableSection(
+                            title = "Education",
+                            content = {
+                                user.education.forEach { (id, education) ->
+                                    EducationItem(
+                                        education = education,
+                                        onUpdate = { updatedEducation ->
+                                            val updatedEducationMap = user.education.toMutableMap()
+                                            updatedEducationMap[id] = updatedEducation
+                                            viewModel.saveUserInfo(
+                                                user.copy(education = updatedEducationMap),
+                                                onSuccess = {
+                                                    // Handle success
+                                                },
+                                                onFailure = { exception ->
+                                                    // Handle failure
+                                                })
+                                        }
+                                    )
+                                }
+                            }
+                        )
+
+                        // Experience section
+                        ExpandableSection(
+                            title = "Experience",
+                            content = {
+                                user.experience.forEach { (id, experience) ->
+                                    ExperienceItem(
+                                        experience = experience,
+                                        onUpdate = { updatedExperience ->
+                                            val updatedExperienceMap =
+                                                user.experience.toMutableMap()
+                                            updatedExperienceMap[id] = updatedExperience
+                                            viewModel.saveUserInfo(
+                                                user.copy(experience = updatedExperienceMap),
+                                                onSuccess = {
+                                                    // Handle success
+                                                },
+                                                onFailure = { exception ->
+                                                    // Handle failure
+                                                })
+                                        }
+                                    )
+                                }
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        Button(onClick = {
+                            viewModel.saveUserInfo(user, onSuccess = {
+                                // Handle success
+                            }, onFailure = { exception ->
+                                // Handle failure
+                            })
+                        }) {
+                            Text("Save Changes")
+                        }
+
+                        Button(onClick = {
+                            navController.navigate(ScreenRoutes.UpdateProfileScreen.route)
+                        }) {
+                            Text("Update portfolio")
+                        }
+
+                        Button(onClick = { showDialog = true }) {
+                            Text("Delete portfolio")
+                        }
+
+                        if (showDialog) {
+                            AlertDialog(
+                                onDismissRequest = { showDialog = false },
+                                title = { Text("Delete portfolio") },
+                                text = { Text("Dear, everything is under your control, so are you sure you want to delete your profile? This action cannot be undone!") },
+                                confirmButton = {
+                                    Button(onClick = {
+                                        showDialog = false
+                                        viewModel.deleteUserProfile(
+                                            userId = currentUserId,
+                                            username = userInfo?.username.orEmpty(),
+                                            onSuccess = {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Profile deleted successfully",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                // Navigate to home
+                                                navController.navigate(ScreenRoutes.HomeScreen.route)
+                                                // Handle additional actions after deletion, like navigation
+                                            },
+                                            onFailure = { exception ->
+                                                Toast.makeText(
+                                                    context,
+                                                    "Failed to delete profile: ${exception.message}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        )
+                                    }) {
+                                        Text("Confirm")
+                                    }
+                                },
+                                dismissButton = {
+                                    Button(onClick = { showDialog = false }) {
+                                        Text("Cancel")
+                                    }
+                                },
+                                modifier = Modifier.animateContentSize()
+                            )
+                        }
+
+
+                        // Show edit dialog if needed
+                        showEditExperienceDialog?.let { (id, experience) ->
+                            EditExperienceDialog(
+                                experience = experience,
+                                onDismiss = { showEditExperienceDialog = null },
+                                onSave = { updatedExperience ->
+                                    val updatedExperienceMap = user.experience.toMutableMap()
+                                    updatedExperienceMap[id] = updatedExperience
+                                    viewModel.saveUserInfo(
+                                        user.copy(experience = updatedExperienceMap),
+                                        onSuccess = {
+                                            // Handle success
+                                        },
+                                        onFailure = { exception ->
+                                            // Handle failure
+                                        })
+                                }
+                            )
+                        }
                     }
                 }
-            }
 
-            !hasProfile -> {
-                Column(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "It looks like you don't have portfolio published yet, let's create one.")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(onClick = {
-                        navController.navigate(ScreenRoutes.CreateProfileScreen.route)
-                    }) {
-                        Text("Create Portfolio")
+                else -> {
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                    ) {
+                        Text(
+                            text = "It looks like you don't have portfolio published yet, let's create one."
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(onClick = {
+                            navController.navigate(ScreenRoutes.CreateProfileScreen.route)
+                        }) {
+                            Text("Create Portfolio")
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 }

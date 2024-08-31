@@ -10,7 +10,9 @@
 package dev.devunion.skillsnap.ui.account
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -35,6 +37,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -57,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import dev.devunion.skillsnap.R
 import dev.devunion.skillsnap.models.User
 import dev.devunion.skillsnap.utils.sendMail
@@ -187,13 +191,13 @@ fun ProfileSection(userName: String?, userEmail: String?) {
     ) {
         // Placeholder for profile image
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),  // Use actual profile image resource
+            painter = rememberAsyncImagePainter(""),  // Use actual profile image resource
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)  // Circular profile picture
-                .background(MaterialTheme.colorScheme.primary)
-                .border(2.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
+                .background(MaterialTheme.colorScheme.background)
+                .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -226,17 +230,22 @@ fun ContactAndCopyrightSection() {
             .animateContentSize(),  // Smooth transitions for size changes
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val context = LocalContext.current
         // Contact Section with Animation
         AnimatedVisibility(visible = true) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "Contact us",
+                    text = "contact us",
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                ContactRow("Email", "contact@devunion.dev")
-                ContactRow("\uD835\uDD4F ", "devunionorg")
+                ContactRow("\uD835\uDD4F ", "devunionorg") {
+                    CustomTabsIntent
+                        .Builder()
+                        .build()
+                        .launchUrl(context, Uri.parse("https://x.com/devunionorg"))
+                }
             }
         }
 
@@ -246,7 +255,7 @@ fun ContactAndCopyrightSection() {
         AnimatedVisibility(visible = true) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "© 2024 My Portfolio",
+                    text = "© 2024 SkillSnap",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -261,7 +270,11 @@ fun ContactAndCopyrightSection() {
 }
 
 @Composable
-fun ContactRow(label: String, value: String) {
+fun ContactRow(
+    label: String,
+    value: String,
+    onClick: () -> Unit
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "$label: ",
@@ -269,11 +282,16 @@ fun ContactRow(label: String, value: String) {
             color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
+        TextButton(
+            onClick = { onClick() },
+
+            ) {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2024. DevUnion Foundation.
+  ~ GitHub: https://github.com/devunionorg
+  ~ All rights reserved.
+  ~
+  ~ This project was conceptualized and developed by @abdelillahbel.
+  ~ GitHub: https://github.com/abdelillahbel
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="119dp"
+    android:height="119dp"
+    android:viewportWidth="119"
+    android:viewportHeight="119">
+    <group>
+        <path
+            android:fillColor="#80E0E6EC"
+            android:pathData="M59.73 0.82A58.91 58.91 0 1 0 59.73 118.64 58.91 58.91 0 1 0 59.73 0.82z" />
+    </group>
+    <path
+        android:pathData="M59.73 1.87A57.86 57.86 0 1 0 59.73 117.59 57.86 57.86 0 1 0 59.73 1.87z"
+        android:strokeWidth="2.1">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:endX="59.73"
+                android:endY="118.64"
+                android:startX="59.73"
+                android:startY="0.82"
+                android:type="linear">
+                <item
+                    android:color="#B3ABB2BB"
+                    android:offset="0" />
+                <item
+                    android:color="#FF3F4246"
+                    android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M59.73 63.94A35.77 23.14 0 1 0 59.73 110.22 35.77 23.14 0 1 0 59.73 63.94z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="59.73"
+                android:endY="110.22"
+                android:startX="59.73"
+                android:startY="75.51"
+                android:type="linear">
+                <item
+                    android:color="#FF818181"
+                    android:offset="0" />
+                <item
+                    android:color="#FF000000"
+                    android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <group>
+        <path android:pathData="M59.73 17.65A21.04 21.04 0 1 0 59.73 59.73 21.04 21.04 0 1 0 59.73 17.65z">
+            <aapt:attr name="android:fillColor">
+                <gradient
+                    android:endX="59.73"
+                    android:endY="59.73"
+                    android:startX="59.73"
+                    android:startY="28.17"
+                    android:type="linear">
+                    <item
+                        android:color="#FF818181"
+                        android:offset="0" />
+                    <item
+                        android:color="#FF000000"
+                        android:offset="1" />
+                </gradient>
+            </aapt:attr>
+        </path>
+    </group>
+</vector>

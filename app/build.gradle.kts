@@ -21,8 +21,8 @@ android {
         applicationId = "dev.devunion.skillsnap"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.0.1-beta"
+        versionCode = 4
+        versionName = "0.0.2-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

@@ -18,6 +18,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +30,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
@@ -148,11 +150,12 @@ fun UpdateProfileScreen(
                     painter = rememberAsyncImagePainter(it),
                     contentDescription = null,
                     modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
                         .size(120.dp)
                         .clip(CircleShape)
                         .border(
                             width = 1.dp,
-                            color = Color.White,
+                            color = colorScheme.onBackground,
                             shape = CircleShape
                         )
                         .background(colorScheme.surface)
@@ -170,7 +173,7 @@ fun UpdateProfileScreen(
                         .clip(CircleShape)
                         .border(
                             width = 1.dp,
-                            color = Color.White,
+                            color = colorScheme.onBackground,
                             shape = CircleShape
                         )
                         .background(colorScheme.surface)
@@ -182,6 +185,12 @@ fun UpdateProfileScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            Text(
+                text = "General information",
+                fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(6.dp))
 
             // Updating user details like name, bio, etc.
             OutlinedTextField(
@@ -221,12 +230,13 @@ fun UpdateProfileScreen(
                 label = { Text("Resume link") }
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "Contact details",
                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                 style = MaterialTheme.typography.titleMedium
             )
+            Spacer(modifier = Modifier.height(6.dp))
             // Contact Information Section
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -388,7 +398,13 @@ fun UpdateProfileScreen(
 
         } ?: run {
             // Handle the case when userInfo is null, e.g., show a loading indicator or message
-            Text("Loading...")
+            // Show loading indicator in the center of the screen
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator()
+            }
         }
     }
 }

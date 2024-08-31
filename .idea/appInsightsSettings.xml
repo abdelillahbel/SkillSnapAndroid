@@ -28,8 +28,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="dev.devunion.myportfolio" />
-                  <option name="mobileSdkAppId" value="1:739266560477:android:c0b31908ef02233cbc3634" />
+                  <option name="appId" value="dev.devunion.skillsnap" />
+                  <option name="mobileSdkAppId" value="1:739266560477:android:eb3a101f0ffd6ed1bc3634" />
                   <option name="projectId" value="devunion-platform" />
                   <option name="projectNumber" value="739266560477" />
                 </ConnectionSetting>

@@ -19,7 +19,7 @@ import dev.devunion.skillsnap.ui.auth.signup.SignUpScreen
 import dev.devunion.skillsnap.viewmodels.auth.FirebaseAuthViewModel
 
 
-fun NavGraphBuilder.AuthNav(
+fun NavGraphBuilder.authNav(
     navController: NavHostController
 ) {
     val authViewModel = FirebaseAuthViewModel()
