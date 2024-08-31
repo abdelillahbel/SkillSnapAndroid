@@ -38,6 +38,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -84,7 +85,7 @@ import dev.devunion.skillsnap.viewmodels.auth.AuthViewModelInterface
 
 @Composable
 fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavController) {
-    SetBarColor(color = MaterialTheme.colorScheme.background)
+    SetBarColor(color = MaterialTheme.colorScheme.surface)
 
     val scrollState = rememberScrollState()
     // val context = LocalContext.current
@@ -105,88 +106,91 @@ fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavControl
 //    }
 
     SkillSnapTheme {
-        var showDialog by remember { mutableStateOf(false) }
-        var dialogMessage by remember { mutableStateOf("") }
-
-        // Show alert dialog if needed
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                text = { Text(dialogMessage) },
-                confirmButton = {
-                    Button(
-                        onClick = { showDialog = false }
-                    ) {
-                        Text("Okay")
-                    }
-                },
-                modifier = Modifier.animateContentSize()  // Add animation to dialog appearance
-            )
-        }
-
-
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .verticalScroll(scrollState),
-            horizontalAlignment = CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
         ) {
-            LoginHeader()
-            Spacer(modifier = Modifier.height(40.dp))
-            SignInSection(
-                email = authViewModel.email,
-                password = authViewModel.password,
-                onEmailChange = { authViewModel.email = it },
-                onPasswordChange = { authViewModel.password = it },
-                onForgotPasswordClick = {
-                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route)
-                },
-                onSignInClick = {
+            var showDialog by remember { mutableStateOf(false) }
+            var dialogMessage by remember { mutableStateOf("") }
 
-                    when {
-                        authViewModel.email.isEmpty() -> {
-                            val emailError = "Please enter your email!"
-                            dialogMessage = emailError
-                            showDialog = true
+            // Show alert dialog if needed
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    text = { Text(dialogMessage) },
+                    confirmButton = {
+                        Button(
+                            onClick = { showDialog = false }
+                        ) {
+                            Text("Okay")
                         }
+                    },
+                    modifier = Modifier.animateContentSize()  // Add animation to dialog appearance
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
 
-                        !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
-                            val emailError = "Please enter a valid email address!"
-                            dialogMessage = emailError
-                            showDialog = true
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
+                horizontalAlignment = CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                LoginHeader()
+                Spacer(modifier = Modifier.height(40.dp))
+                SignInSection(
+                    email = authViewModel.email,
+                    password = authViewModel.password,
+                    onEmailChange = { authViewModel.email = it },
+                    onPasswordChange = { authViewModel.password = it },
+                    onForgotPasswordClick = {
+                        navController.navigate(ScreenRoutes.ResetPasswordScreen.route)
+                    },
+                    onSignInClick = {
+
+                        when {
+                            authViewModel.email.isEmpty() -> {
+                                val emailError = "Please enter your email!"
+                                dialogMessage = emailError
+                                showDialog = true
+                            }
+
+                            !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
+                                val emailError = "Please enter a valid email address!"
+                                dialogMessage = emailError
+                                showDialog = true
+                            }
+
+                            authViewModel.password.isEmpty() -> {
+                                val passwordError = "Please enter password!"
+                                dialogMessage = passwordError
+                                showDialog = true
+                            }
+
+                            else -> {
+                                authViewModel.login(
+                                    onSuccess = {
+                                        navController.popBackStack()
+                                        navController.navigate(ScreenRoutes.MainNav.route)
+                                    },
+                                    onFailure = { exception ->
+                                        dialogMessage = exception.message.toString()
+                                        showDialog = true
+                                    }
+                                )
+                            }
                         }
-
-                        authViewModel.password.isEmpty() -> {
-                            val passwordError = "Please enter password!"
-                            dialogMessage = passwordError
-                            showDialog = true
-                        }
-
-                        else -> {
-                            authViewModel.login(
-                                onSuccess = {
-                                    navController.popBackStack()
-                                    navController.navigate(ScreenRoutes.MainNav.route)
-                                },
-                                onFailure = { exception ->
-                                    dialogMessage = exception.message.toString()
-                                    showDialog = true
-                                }
-                            )
+                    },
+                    onSignUpClick = {
+                        navController.navigate(ScreenRoutes.SignUpScreen.route) {
+                            popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = true }
                         }
                     }
-                },
-                onSignUpClick = {
-                    navController.navigate(ScreenRoutes.SignUpScreen.route) {
-                        popUpTo(ScreenRoutes.LoginScreen.route) { inclusive = true }
-                    }
-                }
-            )
+                )
+            }
         }
     }
-
 
 }
 
@@ -230,7 +234,8 @@ fun SignInSection(
         if (showPassword) R.drawable.visibility_icon else R.drawable.visibility_off_icon
     }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = CenterHorizontally,
     ) {

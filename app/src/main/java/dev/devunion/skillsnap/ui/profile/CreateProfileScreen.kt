@@ -14,6 +14,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -410,7 +411,10 @@ fun CreateProfileScreen(
                     ).show()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .animateContentSize(),
+            shape = RoundedCornerShape(20f),
             enabled = !isUsernameTaken && !isCheckingUsername && isUsernameValid && username.isNotBlank() && name.isNotBlank() && bio.isNotBlank()
         ) {
             Text(text = "Create Profile")
