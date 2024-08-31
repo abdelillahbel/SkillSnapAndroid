@@ -66,6 +66,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.devunion.skillsnap.R
 import dev.devunion.skillsnap.navigation.ScreenRoutes
+import dev.devunion.skillsnap.ui.theme.SkillSnapTheme
 import dev.devunion.skillsnap.viewmodels.auth.AuthViewModelInterface
 
 
@@ -96,145 +97,147 @@ fun SignUpScreen(authViewModel: AuthViewModelInterface, navController: NavContro
     }
 
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.blurry_gradient_bg),
-            contentDescription = "Login",
-            modifier = Modifier
-                .fillMaxSize()
-                .blur(4.dp),
-            contentScale = ContentScale.Crop
-        )
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(28.dp)
-                .alpha(0.7f)
-                .clip(
-                    RoundedCornerShape(
-                        topStart = 20.dp,
-                        topEnd = 20.dp,
-                        bottomStart = 20.dp,
-                        bottomEnd = 20.dp
-                    )
-                )
-                .background(MaterialTheme.colorScheme.background)
-                .wrapContentHeight()
-        ) {
-            Column(
+    SkillSnapTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.blurry_gradient_bg),
+                contentDescription = "Login",
                 modifier = Modifier
-                    .padding(48.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-
-
-                SignUpHeader()
-                Spacer(modifier = Modifier.height(20.dp))
-                SignUpFields(
-                    name = authViewModel.name,
-                    email = authViewModel.email,
-                    password = authViewModel.password,
-                    confirmPassword = authViewModel.confirmPassword,
-                    onNameChange = { authViewModel.name = it },
-                    onEmailChange = { authViewModel.email = it },
-                    onPasswordChange = { authViewModel.password = it },
-                    onConfirmPasswordChange = { authViewModel.confirmPassword = it },
-                    onForgotPasswordClick = {
-//                        navController.toForgotPassword()
-                        Toast.makeText(context, "Available soon", Toast.LENGTH_SHORT).show()
-                    }
-                )
-                SignUpFooter(
-                    onSignInClick = {
-                        navController.popBackStack()
-                        navController.navigate(ScreenRoutes.LoginScreen.route)
-                    },
-                    onSignUpClick = {
-
-
-                        // Validate input fields
-                        when {
-                            authViewModel.name.isEmpty() -> {
-                                val nameError = "Name cannot be empty"
-                                dialogMessage = nameError
-                                showDialog = true
-                            }
-
-                            authViewModel.email.isEmpty() -> {
-                                val emailError = "Email cannot be empty"
-                                dialogMessage = emailError
-                                showDialog = true
-                            }
-
-                            !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
-                                val emailError = "Please enter a valid email address"
-                                dialogMessage = emailError
-                                showDialog = true
-                            }
-
-                            authViewModel.password.isEmpty() -> {
-                                val passwordError = "Password cannot be empty"
-                                dialogMessage = passwordError
-                                showDialog = true
-                            }
-
-                            authViewModel.password.length < 6 -> {
-                                val passwordError = "Password must be at least 6 characters"
-                                dialogMessage = passwordError
-                                showDialog = true
-                            }
-
-                            authViewModel.confirmPassword.isEmpty() -> {
-                                val confirmPasswordError = "Please confirm your password"
-                                dialogMessage = confirmPasswordError
-                                showDialog = true
-                            }
-
-                            authViewModel.confirmPassword != authViewModel.password -> {
-                                val confirmPasswordError = "Passwords do not match"
-                                dialogMessage = confirmPasswordError
-                                showDialog = true
-                            }
-
-                            else -> {
-                                // Proceed with Firebase Auth
-                                authViewModel.register(
-                                    onSuccess = {
-                                        authViewModel.saveUserData(
-                                            onSuccess = {
-                                                navController.navigate(ScreenRoutes.MainNav.route) {
-                                                    popUpTo(ScreenRoutes.SignUpScreen.route) {
-                                                        inclusive = true
-                                                    }
-                                                }
-                                            },
-                                            onFailure = { exception ->
-                                                dialogMessage = exception.message.toString()
-                                                showDialog = true
-                                            }
-                                        )
-                                    },
-                                    onFailure = { exception ->
-                                        dialogMessage = exception.message.toString()
-                                        showDialog = true
-                                    }
-                                )
-                            }
-                        }
-                    }
-                )
-            }
+                    .fillMaxSize()
+                    .blur(4.dp),
+                contentScale = ContentScale.Crop
+            )
         }
 
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(28.dp)
+                    .alpha(0.7f)
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 20.dp,
+                            topEnd = 20.dp,
+                            bottomStart = 20.dp,
+                            bottomEnd = 20.dp
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.background)
+                    .wrapContentHeight()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(48.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+
+                    SignUpHeader()
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SignUpFields(
+                        name = authViewModel.name,
+                        email = authViewModel.email,
+                        password = authViewModel.password,
+                        confirmPassword = authViewModel.confirmPassword,
+                        onNameChange = { authViewModel.name = it },
+                        onEmailChange = { authViewModel.email = it },
+                        onPasswordChange = { authViewModel.password = it },
+                        onConfirmPasswordChange = { authViewModel.confirmPassword = it },
+                        onForgotPasswordClick = {
+//                        navController.toForgotPassword()
+                            Toast.makeText(context, "Available soon", Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                    SignUpFooter(
+                        onSignInClick = {
+                            navController.popBackStack()
+                            navController.navigate(ScreenRoutes.LoginScreen.route)
+                        },
+                        onSignUpClick = {
+
+
+                            // Validate input fields
+                            when {
+                                authViewModel.name.isEmpty() -> {
+                                    val nameError = "Name cannot be empty"
+                                    dialogMessage = nameError
+                                    showDialog = true
+                                }
+
+                                authViewModel.email.isEmpty() -> {
+                                    val emailError = "Email cannot be empty"
+                                    dialogMessage = emailError
+                                    showDialog = true
+                                }
+
+                                !Patterns.EMAIL_ADDRESS.matcher(authViewModel.email).matches() -> {
+                                    val emailError = "Please enter a valid email address"
+                                    dialogMessage = emailError
+                                    showDialog = true
+                                }
+
+                                authViewModel.password.isEmpty() -> {
+                                    val passwordError = "Password cannot be empty"
+                                    dialogMessage = passwordError
+                                    showDialog = true
+                                }
+
+                                authViewModel.password.length < 6 -> {
+                                    val passwordError = "Password must be at least 6 characters"
+                                    dialogMessage = passwordError
+                                    showDialog = true
+                                }
+
+                                authViewModel.confirmPassword.isEmpty() -> {
+                                    val confirmPasswordError = "Please confirm your password"
+                                    dialogMessage = confirmPasswordError
+                                    showDialog = true
+                                }
+
+                                authViewModel.confirmPassword != authViewModel.password -> {
+                                    val confirmPasswordError = "Passwords do not match"
+                                    dialogMessage = confirmPasswordError
+                                    showDialog = true
+                                }
+
+                                else -> {
+                                    // Proceed with Firebase Auth
+                                    authViewModel.register(
+                                        onSuccess = {
+                                            authViewModel.saveUserData(
+                                                onSuccess = {
+                                                    navController.navigate(ScreenRoutes.MainNav.route) {
+                                                        popUpTo(ScreenRoutes.SignUpScreen.route) {
+                                                            inclusive = true
+                                                        }
+                                                    }
+                                                },
+                                                onFailure = { exception ->
+                                                    dialogMessage = exception.message.toString()
+                                                    showDialog = true
+                                                }
+                                            )
+                                        },
+                                        onFailure = { exception ->
+                                            dialogMessage = exception.message.toString()
+                                            showDialog = true
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+
+        }
     }
 
 

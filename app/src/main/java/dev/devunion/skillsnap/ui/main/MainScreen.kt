@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.devunion.skillsnap.ui.main.components.MainScaffold
-import dev.devunion.skillsnap.ui.theme.MyPortfolioTheme
+import dev.devunion.skillsnap.ui.theme.SkillSnapTheme
 
 
 @Preview(showBackground = true)
@@ -36,7 +36,7 @@ fun HomeScreenPreview() {
 fun MainScreen(navController: NavController, logout: () -> Unit) {
 
 
-    MyPortfolioTheme {
+    SkillSnapTheme {
         SetBarColor(color = MaterialTheme.colorScheme.background)
 
         Surface(

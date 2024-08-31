@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2024. DevUnion Foundation.
+  ~ GitHub: https://github.com/devunionorg
+  ~ All rights reserved.
+  ~
+  ~ This project was conceptualized and developed by @abdelillahbel.
+  ~ GitHub: https://github.com/abdelillahbel
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+    <group>
+        <clip-path android:pathData="M10.087,0L10.087,0A9.087,9.087 0,0 1,19.174 9.087L19.174,9.913A9.087,9.087 0,0 1,10.087 19L10.087,19A9.087,9.087 0,0 1,1 9.913L1,9.087A9.087,9.087 0,0 1,10.087 0z" />
+        <path
+            android:fillColor="#4285F4"
+            android:pathData="M19.174,9.711C19.174,8.932 19.112,8.363 18.978,7.774H10.272V11.289H15.382C15.28,12.163 14.723,13.479 13.487,14.363L13.469,14.48L16.222,16.659L16.413,16.678C18.164,15.026 19.174,12.594 19.174,9.711Z" />
+        <path
+            android:fillColor="#34A853"
+            android:pathData="M10.272,18.973C12.776,18.973 14.878,18.131 16.413,16.678L13.487,14.363C12.704,14.92 11.653,15.31 10.272,15.31C7.82,15.31 5.739,13.658 4.997,11.373L4.889,11.383L2.026,13.646L1.989,13.752C3.514,16.847 6.646,18.973 10.272,18.973Z" />
+        <path
+            android:fillColor="#FBBC05"
+            android:pathData="M4.997,11.373C4.802,10.784 4.688,10.153 4.688,9.5C4.688,8.847 4.802,8.216 4.987,7.626L4.982,7.501L2.084,5.202L1.989,5.248C1.361,6.532 1,7.974 1,9.5C1,11.026 1.361,12.468 1.989,13.752L4.997,11.373Z" />
+        <path
+            android:fillColor="#EB4335"
+            android:pathData="M10.272,3.69C12.014,3.69 13.188,4.458 13.858,5.1L16.475,2.49C14.867,0.964 12.776,0.027 10.272,0.027C6.646,0.027 3.514,2.153 1.989,5.248L4.987,7.626C5.739,5.342 7.82,3.69 10.272,3.69Z" />
+    </group>
+</vector>

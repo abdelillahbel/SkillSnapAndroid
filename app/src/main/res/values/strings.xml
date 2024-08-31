@@ -9,4 +9,25 @@
 
 <resources>
     <string name="app_name">SkillSnap</string>
+    <string name="email_hint">Enter Your Email</string>
+    <string name="email">email</string>
+    <string name="password_hint">Enter Your Password</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="other_sign_in_options">Other Sign in options</string>
+    <string name="sign_up">Sign up</string>
+    <string name="home">Home</string>
+    <string name="for_you">For you</string>
+    <string name="create_post">Create Post</string>
+    <string name="send">Send</string>
+    <string name="what_happening">What\'s happening?</string>
+    <string name="use_photo">Use Photo</string>
+    <string name="postsCount">posts</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
+    <string name="userName">user name</string>
+    <string name="displayName">display name</string>
+    <string name="password">password</string>
+    <string name="displayNameHint">Enter Full Name</string>
+    <string name="userNameHint">Enter User Name</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2024. DevUnion Foundation.
+  ~ GitHub: https://github.com/devunionorg
+  ~ All rights reserved.
+  ~
+  ~ This project was conceptualized and developed by @abdelillahbel.
+  ~ GitHub: https://github.com/abdelillahbel
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="28"
+    android:viewportHeight="28">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M14,8.167C17.22,8.167 19.833,10.78 19.833,14C19.833,14.758 19.682,15.47 19.413,16.135L22.82,19.542C24.582,18.072 25.97,16.17 26.822,14C24.803,8.878 19.822,5.25 13.988,5.25C12.355,5.25 10.792,5.542 9.345,6.067L11.865,8.587C12.53,8.318 13.242,8.167 14,8.167ZM2.333,4.982L4.993,7.642L5.53,8.178C3.58,9.693 2.073,11.703 1.167,14C3.185,19.122 8.167,22.75 14,22.75C15.808,22.75 17.535,22.4 19.11,21.77L19.6,22.26L23.018,25.667L24.5,24.185L3.815,3.5L2.333,4.982ZM8.785,11.433L10.593,13.242C10.535,13.487 10.5,13.743 10.5,14C10.5,15.937 12.063,17.5 14,17.5C14.257,17.5 14.513,17.465 14.758,17.407L16.567,19.215C15.785,19.6 14.922,19.833 14,19.833C10.78,19.833 8.167,17.22 8.167,14C8.167,13.078 8.4,12.215 8.785,11.433ZM13.813,10.523L17.488,14.198L17.512,14.012C17.512,12.075 15.948,10.512 14.012,10.512L13.813,10.523Z" />
+</vector>
