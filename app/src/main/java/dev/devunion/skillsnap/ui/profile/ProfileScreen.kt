@@ -164,7 +164,7 @@ fun ProfileScreen(
                     userInfo?.let { user ->
                         // Display user general info
 
-                        val profilePageUrl = "https://www.devunion.dev/m/${user.username}"
+                        val profilePageUrl = "https://skill-snap-web.vercel.app/${user.username}"
 
 
                         Card(
