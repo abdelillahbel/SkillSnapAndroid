@@ -17,20 +17,20 @@ device.
 
 <table>
   <tr>
-    <td><img src="screenshots/Screenshot_20240828_224302.png" alt="Screenshot 1" style="width:100%; max-width:720px;"/></td>
-    <td><img src="screenshots/Screenshot_20240828_230204.png" alt="Screenshot 2" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_224302.png" alt="Screenshot 1"  width="200"/></td>
+    <td><img src="screenshots/Screenshot_20240828_230204.png" alt="Screenshot 2"  width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/Screenshot_20240828_230526.png" alt="Screenshot 3" style="width:100%; max-width:720px;"/></td>
-    <td><img src="screenshots/Screenshot_20240828_231008.png" alt="Screenshot 4" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_230526.png" alt="Screenshot 3"  width="200"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231008.png" alt="Screenshot 4"  width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/Screenshot_20240828_231233.png" alt="Screenshot 5" style="width:100%; max-width:720px;"/></td>
-    <td><img src="screenshots/Screenshot_20240828_231303.png" alt="Screenshot 6" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231233.png" alt="Screenshot 5"  width="200"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231303.png" alt="Screenshot 6"  width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/Screenshot_20240828_231445.png" alt="Screenshot 7" style="width:100%; max-width:720px;"/></td>
-    <td><img src="screenshots/Screenshot_20240828_231617.png" alt="Screenshot 8" style="width:100%; max-width:720px;"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231445.png" alt="Screenshot 7"  width="200"/></td>
+    <td><img src="screenshots/Screenshot_20240828_231617.png" alt="Screenshot 8"  width="200"/></td>
   </tr>
 </table>
 

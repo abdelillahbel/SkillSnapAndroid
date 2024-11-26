@@ -37,7 +37,7 @@ fun MainScreen(navController: NavController, logout: () -> Unit) {
 
 
     SkillSnapTheme {
-        SetBarColor(color = MaterialTheme.colorScheme.surface)
+        SetBarColor(color = MaterialTheme.colorScheme.background)
 
         Surface(
             modifier = Modifier.fillMaxSize(),

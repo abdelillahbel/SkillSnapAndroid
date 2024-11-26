@@ -85,7 +85,7 @@ import dev.devunion.skillsnap.viewmodels.auth.AuthViewModelInterface
 
 @Composable
 fun LoginScreen(authViewModel: AuthViewModelInterface, navController: NavController) {
-    SetBarColor(color = MaterialTheme.colorScheme.surface)
+    SetBarColor(color = MaterialTheme.colorScheme.background)
 
     val scrollState = rememberScrollState()
     // val context = LocalContext.current

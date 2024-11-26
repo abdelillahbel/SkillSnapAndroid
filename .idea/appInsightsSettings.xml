@@ -29,9 +29,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="dev.devunion.skillsnap" />
-                  <option name="mobileSdkAppId" value="1:739266560477:android:eb3a101f0ffd6ed1bc3634" />
-                  <option name="projectId" value="devunion-platform" />
-                  <option name="projectNumber" value="739266560477" />
+                  <option name="mobileSdkAppId" value="1:224363494689:android:06ba104e45eb22bb3f5260" />
+                  <option name="projectId" value="skillsnap-e7909" />
+                  <option name="projectNumber" value="224363494689" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
